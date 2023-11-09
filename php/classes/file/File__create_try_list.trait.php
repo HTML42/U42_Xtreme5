@@ -31,7 +31,6 @@ trait File__create_try_list
                                 }
                         }
                 }
-                var_dump($list);
                 return $list;
         }
 }

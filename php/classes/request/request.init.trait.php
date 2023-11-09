@@ -8,7 +8,13 @@ trait Request_init
         if (substr($path_to_script, 0, 1) == '/') {
             $path_to_script = substr($path_to_script, 1);
         }
-        self::$url_path_to_script = str_replace('core/classes/', '', $path_to_script);
+        if (substr($path_to_script, -4) == 'php/') {
+            $path_to_script = substr($path_to_script, 0, -4);
+        }
+        if(strstr($_SERVER['REQUEST_URI'], 'dist/') && !strstr($path_to_script, 'dist/'))  {
+            $path_to_script .= 'dist/';
+        }
+        self::$url_path_to_script = $path_to_script;
         preg_match('/\/*(.*)\/*/', $_SERVER['REQUEST_URI'], $match);
         if (strstr($match[1], '?')) {
             $match[1] = preg_replace('/\?.*/', '', $match[1]);
