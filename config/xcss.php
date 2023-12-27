@@ -5,6 +5,7 @@ $color_main = '#44D';
 $color_secondary = '#3C6';
 $distance = 20;
 $header_size = 60;
+$footer_size = 100;
 $amplifier = 0.2;
 $page_width = 1200;
 //Breakpoints - Description: 0 -> 570 = Small ; 571 - 1199 = Medium ; 1200 - XX = Big
@@ -39,6 +40,7 @@ App::$config['xcss'] = [
     'color_grey_lighter' => 'rgba(0,0,0,0.05)',
     //#Change for Project
     'header_height' => $header_size . 'px',
+    'footer_min_height' => $footer_size . 'px',
     //#Do not Change
     'xbp_small_max' => $xbp_small . 'px',
     'xbp_big_min' => $xbp_big . 'px',

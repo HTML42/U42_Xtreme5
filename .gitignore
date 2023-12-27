@@ -1,14 +1,23 @@
 
-/nbproject/private
-/nbproject/private/
-/nbproject/private/*
 nbproject/private
 nbproject/private/
 nbproject/private/*
+/nbproject/private
+/nbproject/private/
+/nbproject/private/*
 
-/_cache
-/_cache/
-/_cache/*
+vendor
+vendor/
+vendor/*
+/vendor
+/vendor/
+/vendor/*
+
 _cache
 _cache/
 _cache/*
+/_cache
+/_cache/
+/_cache/*
+
+composer.lock

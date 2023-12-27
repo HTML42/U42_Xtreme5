@@ -85,7 +85,9 @@ class TemplateClass {
                 } else if (is_translation) {
                     const translation_key = line.replace(/^(partial):/, "").trim();
                     const Translation = new TranslationClass(translation_key);
-                    new_element = Translation.result;
+                    new_element = document.createElement('x-translation');
+                    new_element.translation_key = translation_key;
+                    new_element.innerHTML = Translation.result;
                 }
             }
             //

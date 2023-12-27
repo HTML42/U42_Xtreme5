@@ -57,7 +57,8 @@ if (App::config('composer') && is_file(DIR_VENDOR . 'autoload.php')) {
 }
 //
 if (is_null(App::$object) && is_null(App::$action)) {
-    Response::deliver('<!DOCTYPE html><html><head>' .
+    Response::deliver('<!DOCTYPE html><html lang><head>' .
+            '<meta name="viewport" content="width=device-width, initial-scale=1" />' .
             '<script>window.BASEURL="' . BASEURL . '";window.LANG="' . Translation::$LANG . '";</script>' .
             '<script src="js/xtreme" async></script>' .
             '</head></html>');

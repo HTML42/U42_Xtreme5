@@ -9,4 +9,7 @@ header#page_header
             li
                 a[data-href="index/login"]
                     translate:menu.login
+            li
+                a[data-href="index/test"]
+                    translate:words.testpage
     div.menu_trigger

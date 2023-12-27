@@ -7,5 +7,9 @@
         "login": "Login",
         "logout": "Logout",
         "home": "Home"
+    },
+    "words": {
+        "testpage": "TestPage",
+        "welcome": "Welcome"
     }
 }
