@@ -33,6 +33,14 @@ Welcome to Xtreme Webframework 5, an innovative approach to web development that
 ### Controllers for Requests
 - Controllers for handling requests are located in `/php/objects/`.
 
+## Git in your new Project
+- Clear all remotes
+- add the project git-remote
+- git remote add xtreme git@github.com:HTML42/U42_Xtreme5.git
+- git fetch xtreme
+- git checkout -b xtreme-master xtreme/master
+- The Branch xtreme/master can now be pulled to recieve updates for the frameworkk
+
 ### More is Coming Soon
 
 Stay tuned for more documentation on how to use and extend the capabilities of Xtreme Webframework 5.
