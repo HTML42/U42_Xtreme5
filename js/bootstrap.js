@@ -11,6 +11,4 @@ class XPartial extends HTMLElement {
 customElements.define("x-template", XTemplate);
 customElements.define("x-partial", XPartial);
 
-setTimeout(function () {
-  App.render();
-}, 1);
+setTimeout(App.render, 1);

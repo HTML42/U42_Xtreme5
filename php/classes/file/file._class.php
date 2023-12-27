@@ -23,4 +23,5 @@ class File
     use File_path;
     use File_normalize_folder;
     use File__create_try_list;
+    use File__latest_time;
 }

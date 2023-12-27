@@ -1,0 +1,11 @@
+{
+    "app": {
+        "name": "Xtreme5 Website",
+        "domain": "example.de"
+    },
+    "menu": {
+        "login": "Login",
+        "logout": "Logout",
+        "home": "Home"
+    }
+}

@@ -1,22 +1,13 @@
 <?php
 
 $files = array(
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
+    DIR_ROOT . 'css/xtreme/mixins.less',
+    DIR_ROOT . 'css/xtreme/basics.less',
+    DIR_ROOT . 'css/xtreme/header.less',
 );
-$css = '';
+$Css = new Css($files, App::config('xcss', []));
 
-foreach ($files as $file) {
-    if(substr($file, 0, 6) == 'https:' || substr($file, 0, 6) == 'https:') {
-        $css .= Curl::get_cached($file, DAY);
-    } else {
-        $File = File::instance($file);
-        $css .= $File->get_content();
-    }
-}
-
-// Setze den MIME-Typ und Kodierung für die Antwort
 App::$mime = 'text/css';
 App::$encoding = 'UTF-8';
 
-// Sende den zusammengefügten JavaScript-Inhalt
-Response::deliver($css);
+Response::deliver($Css->code);

@@ -10,7 +10,7 @@ trait Curl_special {
             curl_setopt_array($ch, $options);
             $ch_exec = curl_exec($ch);
             //
-            if (!$ch_exec)
+            if (!$ch_exec && !App::config('offline_able'))
                 self::error($ch, $url);
             //
             curl_close($ch);

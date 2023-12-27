@@ -12,10 +12,11 @@ trait Curl_get
             curl_setopt($ch, CURLOPT_HEADER, false);
             $ch_exec = curl_exec($ch);
             //
-            if (!$ch_exec)
+            if (!$ch_exec && !App::config('offline_able'))
                 self::error($ch, $url);
             //
             curl_close($ch);
+            usleep(1);
             return ob_get_clean();
         }
         return '';
