@@ -1,0 +1,4 @@
+div#body
+    partial:header
+    partial:main
+    partial:footer

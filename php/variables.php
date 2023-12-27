@@ -1,10 +1,12 @@
 <?php
 
 define('DIR_PHP', DIR_ROOT . 'php/');
+define('DIR_CACHE', DIR_ROOT . '_cache/');
 define('DIR_CLASSES', DIR_PHP . 'classes/');
 define('DIR_MODES', DIR_PHP . 'modes/');
 define('DIR_DIST', DIR_ROOT . 'dist/');
 define('DIR_OBJECTS', DIR_ROOT . 'objects/');
+define('DIR_TEMPLATES', DIR_ROOT . 'templates/');
 
 define('FILE_ENVIRONMENT', DIR_DIST . 'environment');
 

@@ -30,8 +30,6 @@ include DIR_CLASSES . 'autoload.php';
 include DIR_PHP . 'functions.php';
 include DIR_CLASSES . 'app.class.php';
 
-Request::init();
-
 define('BASEURL', 'http' . (is_https() ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . '/' . Request::$url_path_to_script);
 
 $GLOBALS['ASSET_PREFIX'] = '';
@@ -48,7 +46,7 @@ if (isset(Request::$requested_clean_path_array[0]) && !empty(Request::$requested
     }
 }
 if (is_null(App::$object) && is_null(App::$action)) {
-    Response::deliver('<!DOCTYPE-><html><head><script src="js/xtreme" async></script></head></html>');
+    Response::deliver('<!DOCTYPE-><html><head><script>window.BASEURL="' . BASEURL . '";</script><script src="js/xtreme" async></script></head></html>');
 } else {
     $object_path    = 'objects/' . (is_string(App::$object) && is_string(App::$action) ? App::$object . '/' . App::$action : 'error/404');
     if(is_file(DIR_ROOT . $object_path)) {
