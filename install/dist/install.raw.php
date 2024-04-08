@@ -35,17 +35,6 @@ eval('foreach($requirements as $r){if(!$r[4]){$check_all=false;break;}}');
     <main class="container">
         <article>
 <?php
-function file_composer_json()
-{
-    return '{
-    "require": {
-        "scssphp/scssphp": "^1.12.0",
-        "matthiasmullie/minify": "^1.3"
-    }
-}';
-}
-?>
-<?php
 function comp($min, $max, $current)
 {
     $has_min = version_compare($current, $min, '>=');
@@ -237,7 +226,7 @@ function comp($min, $max, $current)
         echo '</div>';
         echo '<a href="' . BASEURL_SCRIPT . '?step=1" class="btn btn-primary">Go to Step 1</a>';
     } else {
-        file_put_contents(DIR_ROOT . 'composer.json', file_composer_json());
+        file_put_contents(DIR_ROOT . 'composer.json', file_get_contents(DIR_ROOT . '../files/composer.json'));
         echo '<div class="alert alert-info" role="alert">';
         echo 'Please manually execute the following commands in your project directory:<br>';
         echo '<textarea id="composerCommands" class="form-control" rows="1" onclick="this.focus();this.select()">';

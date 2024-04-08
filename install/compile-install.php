@@ -28,7 +28,7 @@ if(!is_dir($dir_dist)) {
 
 foreach(scandir($dir_files) as $filename) {
     $filepath = $dir_files . $filename;
-    if(strstr($filename, '.js')) {
+    if(strstr($filename, '.js') && !strstr($filename, '.json')) {
         $js .= "\n" . file_get_contents($filepath);
     } else if(strstr($filename, '.css')) {
         $css .= "\n" . file_get_contents($filepath);
