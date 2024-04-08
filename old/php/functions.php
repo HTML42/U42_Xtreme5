@@ -1,13 +1,16 @@
 <?php
 
-function is_https() {
+function is_https()
+{
     return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
 }
-function is_url($string) {
+function is_url($string)
+{
     return substr($string, 0, 5) == 'http:' || substr($string, 0, 6) == 'https:';
 }
 
-function debug($var, $height = 'auto', $width = 'auto') {
+function debug($var, $height = 'auto', $width = 'auto')
+{
     $backtrace = debug_backtrace();
     $file = 'Unknown';
     $line = 'Unknown';
@@ -19,9 +22,9 @@ function debug($var, $height = 'auto', $width = 'auto') {
         $line = $backtrace[0]['line'];
     }
     echo '<pre style="' .
-    'word-break:break-word;border: 1px dashed #BBB;background-color: #CCC;padding:10px;color:#333;' . ($height == 'auto' ? '' : 'overflow-y:scroll;') .
-    'height:' . ($height == 'auto' ? 'auto' : $height . 'px') . ';width:' . (strstr($width, '%') || strstr($width, 'px') ? $width : (strstr($width, 'auto') ? 'auto' : $width . 'px')) .
-    ';' . ($width != '100%' ? 'margin: 0 auto 10px;' : '') . '">';
+        'word-break:break-word;border: 1px dashed #BBB;background-color: #CCC;padding:10px;color:#333;' . ($height == 'auto' ? '' : 'overflow-y:scroll;') .
+        'height:' . ($height == 'auto' ? 'auto' : $height . 'px') . ';width:' . (strstr($width, '%') || strstr($width, 'px') ? $width : (strstr($width, 'auto') ? 'auto' : $width . 'px')) .
+        ';' . ($width != '100%' ? 'margin: 0 auto 10px;' : '') . '">';
     echo '<span style="display: block; margin-bottom: 5px; font-weight: 700;">' . $file . ' (line ' . $line . '):</span>';
     ob_start();
     var_dump($var);

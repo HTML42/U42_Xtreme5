@@ -6,11 +6,19 @@ $js = '';
 $dir_root = str_replace('\\', '/', __DIR__) . '/';
 $dir_files = $dir_root . 'files/';
 $dir_dist = $dir_root . 'dist/';
+$dir_test = $dir_root . 'test/';
 $filepath_install_php_raw = $dir_dist . 'install.raw.php';
 $filepath_install_php = $dir_dist . 'install.php';
 $filepath_install_js = $dir_dist . 'script.js';
 $filepath_install_css = $dir_dist . 'styles.css';
 
+//Clean Test Folder
+if(is_dir($dir_test)) {
+    exec('rm -rf ' . $dir_test);
+}
+@mkdir($dir_test);
+
+//
 if(!is_dir($dir_files)) {
     @mkdir($dir_files);
 }
@@ -51,3 +59,9 @@ for($i = 0 ; $i < 10 ; $i++) {
 //
 file_put_contents($filepath_install_php_raw, $code);
 file_put_contents($filepath_install_php, $code_min);
+file_put_contents($dir_test . 'install-xtreme5.php', $code_min);
+
+//
+if(isset($_GET['loop'])) {
+    echo '<script>setTimeout("location.reload(true)", 3000)</script>';
+}

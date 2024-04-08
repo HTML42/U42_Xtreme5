@@ -21,3 +21,10 @@ _cache/*
 /_cache/*
 
 composer.lock
+
+install/test
+install/test/
+install/test/*
+/install/test
+/install/test/
+/install/test/*
