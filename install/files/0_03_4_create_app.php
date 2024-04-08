@@ -23,12 +23,8 @@
         if (function_exists('exec')) {
             $output = [];
             $return_var = 0;
-            $source = DIR_VENDOR . 'u42/x5/install/_structure/*';
-            $destination = DIR_ROOT;
-            $command = (stripos(PHP_OS, 'WIN') === 0) ? "xcopy $source $destination /s /e" : "cp -r $source $destination";
-            exec($command, $output, $return_var);
-            if ($return_var !== 0) {
-                echo "<div class=\"alert alert-danger\" role=\"alert\">Fehler beim Kopieren der Dateien.</div>";
+            cp_r(DIR_VENDOR . 'u42/x5/install/_structure/', DIR_ROOT);
+            if(!is_dir(DIR_ROOT . 'translations/')) {
                 $success = false;
                 $error_code = -2;
             }

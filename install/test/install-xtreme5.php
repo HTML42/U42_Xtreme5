@@ -37,6 +37,45 @@ function comp($min, $max, $current)
     $has_max = version_compare($current, $max, '<=');
     return $has_min && $has_max;
 }
+function cp_r($src, $dest) {
+    if (!is_dir($dest)) {
+        @mkdir($dest, 0755, true);
+    }
+    $dir = opendir($src);
+    while (false !== ($file = readdir($dir))) {
+        if (($file != '.') && ($file != '..')) {
+            if (is_dir($src . '/' . $file)) {
+                cp_r($src . '/' . $file, $dest . '/' . $file);
+            }
+            else {
+                copy($src . '/' . $file, $dest . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
+}
+function rm_r($dir) {
+    if (!is_dir($dir)) {
+        @unlink($dir);
+        return;
+    }
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            $path = $dir . '/' . $file;
+            if (is_dir($path)) {
+                rm_r($path);
+            }
+            else {
+                @unlink($path);
+            }
+        }
+        closedir($dh);
+    }
+    @rmdir($dir);
+}
  if (STEP == 1) { ?>
     <h2>Step 1 - Checks</h2>
     <div class="table-responsive">
@@ -246,12 +285,8 @@ function comp($min, $max, $current)
         if (function_exists('exec')) {
             $output = [];
             $return_var = 0;
-            $source = DIR_VENDOR . 'u42/x5/install/_structure/*';
-            $destination = DIR_ROOT;
-            $command = (stripos(PHP_OS, 'WIN') === 0) ? "xcopy $source $destination /s /e" : "cp -r $source $destination";
-            exec($command, $output, $return_var);
-            if ($return_var !== 0) {
-                echo "<div class=\"alert alert-danger\" role=\"alert\">Fehler beim Kopieren der Dateien.</div>";
+            cp_r(DIR_VENDOR . 'u42/x5/install/_structure/', DIR_ROOT);
+            if(!is_dir(DIR_ROOT . 'translations/')) {
                 $success = false;
                 $error_code = -2;
             }

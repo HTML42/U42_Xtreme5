@@ -1,5 +1,30 @@
 <?php
 
+if(!function_exists('rm_r')) {
+    function rm_r($dir) {
+        if (!is_dir($dir)) {
+            @unlink($dir);
+            return;
+        }
+        if ($dh = opendir($dir)) {
+            while (($file = readdir($dh)) !== false) {
+                if ($file == '.' || $file == '..') {
+                    continue;
+                }
+                $path = $dir . '/' . $file;
+                if (is_dir($path)) {
+                    rm_r($path);
+                }
+                else {
+                    @unlink($path);
+                }
+            }
+            closedir($dh);
+        }
+        @rmdir($dir);
+    }
+}
+//
 $code = '';
 $css = '';
 $js = '';
@@ -14,7 +39,7 @@ $filepath_install_css = $dir_dist . 'styles.css';
 
 //Clean Test Folder
 if(is_dir($dir_test)) {
-    exec('rm -rf ' . $dir_test);
+    rm_r($dir_test);
 }
 @mkdir($dir_test);
 
