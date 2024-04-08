@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ ../vendor/u42/x5/latest/x5_start.php [QSA,L]

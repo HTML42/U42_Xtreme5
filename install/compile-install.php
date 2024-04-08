@@ -60,6 +60,7 @@ for($i = 0 ; $i < 10 ; $i++) {
 file_put_contents($filepath_install_php_raw, $code);
 file_put_contents($filepath_install_php, $code_min);
 file_put_contents($dir_test . 'install-xtreme5.php', $code_min);
+file_put_contents($dir_test . '.gitignore', "*\n!.gitignore");
 
 //
 if(isset($_GET['loop'])) {
