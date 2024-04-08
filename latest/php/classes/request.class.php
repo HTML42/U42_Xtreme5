@@ -6,6 +6,8 @@ class Request
     
     static function init()
     {
+        debug($_SERVER['REQUEST_URI']);
+        debug(DIR_PROJECT);
         $path_to_script = str_replace(basename($_SERVER["SCRIPT_NAME"]), '', $_SERVER["SCRIPT_NAME"]);
         if (substr($path_to_script, 0, 1) == '/') {
             $path_to_script = substr($path_to_script, 1);
