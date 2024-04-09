@@ -252,7 +252,20 @@ function rm_r($dir) {
         echo '</div>';
         echo '<a href="' . BASEURL_SCRIPT . '?step=1" class="btn btn-primary">Go to Step 1</a>';
     } else {
-        file_put_contents(DIR_ROOT . 'composer.json', file_get_contents(DIR_ROOT . '../files/composer.json'));
+        file_put_contents(DIR_ROOT . 'composer.json', '{
+    "require": {
+        "scssphp/scssphp": "^1.12.0",
+        "matthiasmullie/minify": "^1.3",
+        "u42/x5": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/HTML42/U42_Xtreme5.git"
+        }
+    ]
+}
+');
         echo '<div class="alert alert-info" role="alert">';
         echo 'Please manually execute the following commands in your project directory:<br>';
         echo '<textarea id="composerCommands" class="form-control" rows="1" onclick="this.focus();this.select()">';

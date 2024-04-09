@@ -81,6 +81,8 @@ for($i = 0 ; $i < 10 ; $i++) {
     $code_min = preg_replace("/\?\>\s*\<\?php/", "", $code_min);
     $code_min = preg_replace("/\n\s*\n/", "\n", $code_min);
 }
+$code = str_replace('###COMPOSERJSON###', file_get_contents($dir_files . 'composer.json'), $code);
+$code_min = str_replace('###COMPOSERJSON###', file_get_contents($dir_files . 'composer.json'), $code_min);
 //
 file_put_contents($filepath_install_php_raw, $code);
 file_put_contents($filepath_install_php, $code_min);
