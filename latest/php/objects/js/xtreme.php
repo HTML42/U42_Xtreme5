@@ -12,7 +12,7 @@ $files = array(
 );
 $files = array_merge($files, glob(DIR_PROJECT . 'js/controller/*.controller.js'));
 $files[] = File::i('js/bootstrap.js');
-$templates = File::ls(DIR_X5_TEMPLATES, true, true);
+$templates = array_merge(File::ls(DIR_X5_TEMPLATES, true, true), File::ls(DIR_PROJECT_TEMPLATES, true, true));
 $translations = Translation::get_all();
 $Js = new Js($files, $templates, $translations);
 App::$mime = 'application/javascript';
