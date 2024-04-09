@@ -26,10 +26,10 @@ if (is_null(App::$object) && is_null(App::$action)) {
             '</head></html>');
 } else {
     $object_path = 'objects/' . (is_string(App::$object) && is_string(App::$action) ? App::$object . '/' . App::$action : 'error/404');
-    if (is_file(DIR_X5 . $object_path)) {
-        $File_object = File::instance(DIR_X5 . $object_path);
+    if (is_file(DIR_PROJECT . $object_path)) {
+        $File_object = File::instance(DIR_PROJECT . $object_path);
     } else {
-        $object_trylist = File::_create_try_list($object_path, array('.php', '.html', '.css', '.js', ''), array(''));
+        $object_trylist = File::_create_try_list($object_path, array('.php', '.html', '.css', '.js', ''), array(DIR_PROJECT, DIR_X5));
         $File_object = File::instance_of_first_existing_file($object_trylist);
     }
     if (!$File_object->exists) {

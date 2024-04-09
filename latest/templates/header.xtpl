@@ -1,0 +1,12 @@
+header#page_header
+    a[data-href="index/index"].logo
+        translate:app.name
+    nav.menu_main
+        ul.clean_list
+            li
+                a[data-href="index/index"]
+                    translate:menu.home
+            li
+                a[data-href="index/login"]
+                    translate:menu.login
+    div.menu_trigger
