@@ -1,9 +1,0 @@
-tr.table-ok, tr.table-ok td {
-    background-color: #c8e6c9;
-}
-tr.table-fail, tr.table-fail td {
-    background-color: #ffcdd2;
-}
-.is-invalid .invalid-feedback {
-    display: block !important;
-}

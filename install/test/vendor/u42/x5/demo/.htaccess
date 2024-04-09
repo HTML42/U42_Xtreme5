@@ -1,4 +1,0 @@
-SetEnv X5 "../latest/"
-
-RewriteEngine On
-RewriteRule ^ xtreme.php [QSA,L]
