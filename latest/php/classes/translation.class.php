@@ -29,7 +29,7 @@ class Translation {
     }
 
     public static function get_all() {
-        $dir = DIR_TRANSLATIONS . self::$LANG . '/';
+        $dir = DIR_PROJECT . 'translations/' . self::$LANG . '/';
         $default_file = $dir . self::$default_translations;
         if (!isset(self::$_CACHE['#all#']) || is_null(self::$_CACHE['#all#'])) {
             if(is_file($default_file)) {

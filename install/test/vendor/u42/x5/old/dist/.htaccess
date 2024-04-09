@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteCond %{DOCUMENT_ROOT}/execute.php -f
+RewriteRule ^.*$ /execute.php [QSA,L]
+
+RewriteRule ^.*$ ../php/bootstrap.php [QSA,L]

@@ -1,0 +1,14 @@
+{
+    "app": {
+        "name": "Website Name",
+        "domain": "domain.de"
+    },
+    "menu": {
+        "login": "Login",
+        "logout": "Logout",
+        "home": "Home"
+    },
+    "words": {
+        "welcome": "Welcome"
+    }
+}

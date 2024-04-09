@@ -24,13 +24,12 @@ if (substr($dir, -4) == 'php/') {
 }
 define('DIR_X5', $dir);
 
-echo '<pre>';
-var_dump(DIR_X5);
-var_dump($_SERVER);
-die;
 $dir_project = str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']));
 if(substr($dir_project, -1) != '/') {
     $dir_project .= '/';
+}
+if(substr($dir_project, -5) == 'dist/') {
+    $dir_project = substr($dir_project, 0, -5);
 }
 
 include DIR_X5 . 'php/lib/variables.php';

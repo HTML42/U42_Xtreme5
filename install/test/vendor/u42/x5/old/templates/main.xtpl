@@ -1,0 +1,4 @@
+main#page_main
+    aside.aside_left
+    article
+    aside.aside_right

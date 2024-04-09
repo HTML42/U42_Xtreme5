@@ -1,7 +1,6 @@
 <?php
 
 include 'php/lib/bootstrap.php';
-
 if (isset(Request::$requested_clean_path_array[0]) && !empty(Request::$requested_clean_path_array[0])) {
     App::$object = strtolower(trim(Request::$requested_clean_path_array[0]));
     if (isset(Request::$requested_clean_path_array[1]) && !empty(Request::$requested_clean_path_array[1])) {
