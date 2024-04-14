@@ -20,20 +20,24 @@ if (App::config('composer') && is_file(DIR_VENDOR . 'autoload.php')) {
 //
 if (is_null(App::$object) && is_null(App::$action)) {
     Response::deliver('<!DOCTYPE html><html lang><head>' .
-            '<meta name="viewport" content="width=device-width, initial-scale=1" />' .
-            '<script>window.BASEURL="' . BASEURL . '";window.LANG="' . Translation::$LANG . '";</script>' .
-            '<script src="js/xtreme" async></script>' .
-            '</head></html>');
+        '<meta name="viewport" content="width=device-width, initial-scale=1" />' .
+        '<script>window.BASEURL="' . BASEURL . '";window.LANG="' . Translation::$LANG . '";</script>' .
+        '<script src="js/xtreme" async></script>' .
+        '</head></html>');
 } else {
-    $object_path = 'objects/' . (is_string(App::$object) && is_string(App::$action) ? App::$object . '/' . App::$action : 'error/404');
-    if (is_file(DIR_PROJECT . $object_path)) {
-        $File_object = File::instance(DIR_PROJECT . $object_path);
+    if (App::$object == 'images') {
+        $File_object = File::i('modes/image.php');
     } else {
-        $object_trylist = File::_create_try_list($object_path, array('.php', '.html', '.css', '.js', ''), array(DIR_PROJECT, DIR_X5));
-        $File_object = File::instance_of_first_existing_file($object_trylist);
-    }
-    if (!$File_object->exists) {
-        $File_object = File::instance(DIR_X5_OBJECTS . 'error/404');
+        $object_path = 'objects/' . (is_string(App::$object) && is_string(App::$action) ? App::$object . '/' . App::$action : 'error/404');
+        if (is_file(DIR_PROJECT . $object_path)) {
+            $File_object = File::instance(DIR_PROJECT . $object_path);
+        } else {
+            $object_trylist = File::_create_try_list($object_path, array('.php', '.html', '.css', '.js', ''), array(DIR_PROJECT, DIR_X5));
+            $File_object = File::instance_of_first_existing_file($object_trylist);
+        }
+        if (!$File_object->exists) {
+            $File_object = File::instance(DIR_X5_OBJECTS . 'error/404');
+        }
     }
     //
     include $File_object->path;
