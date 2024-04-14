@@ -30,6 +30,12 @@ class TranslationClass {
 function set_language(lang) {
     window.LANG = lang.trim().toLowerCase();
 }
+function _(translation_key) {
+    if(typeof translation_key === 'string') {
+        return (new TranslationClass(translation_key)).result;
+    }
+    return null;
+}
 
 window.LANG = LANG || 'en';
     
