@@ -27,6 +27,7 @@ class DB
                 @mkdir($d);
             }
         }
+        App::$config['db'] = App::$config['db'] || [];
         foreach (App::$config['db'] as $table => $columns) {
             $table = trim(strtolower($table));
             $table_file = self::$dir_tables . $table . '.json';
