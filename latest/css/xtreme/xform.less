@@ -1,0 +1,44 @@
+.xform {
+    @input_padding: @distance_normal;
+    @input_size: @input_padding * 2;
+    &_row {
+
+    }
+    &_row + &_row {
+        margin-top: @distance_normal * 1.5;
+    }
+    &_input {
+        display: block;
+        width: 100%;
+        border: 0 none;
+        border-radius: 2px;
+        outline: none;
+        padding: 0 @input_padding;
+        .h(@input_size);
+    }
+    &_select {
+        option {
+        }
+    }
+    &_inputwrap {
+    }
+    &_inputerror {
+        color: rgba(255, 0, 0, 0.5);
+        position: absolute;
+        top: @input_size;
+        line-height: @distance_normal;
+    }
+    &_buttonwrap {
+        .clear_after();
+    }
+    &_button {
+        &[type="submit"] {
+            .xbutton--main;
+            float: right;
+        }
+        &[type="reset"] {
+            .xbutton;
+            float: left;
+        }
+    }
+}

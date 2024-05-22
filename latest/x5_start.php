@@ -13,6 +13,18 @@ foreach (glob(DIR_PROJECT_CONFIG . '*.php') as $configfile) {
         include_once $configfile;
     }
 }
+include DIR_X5_PHP_CLASSES . 'db.class.php';
+include DIR_X5_PHP_CLASSES . 'xuser.class.php';
+$GLOBALS['login'] = null;
+$GLOBALS['ME_id'] = 0;
+$GLOBALS['ME'] = XUser::load(0);
+if(isset($_COOKIE['X5_login'])) {
+    $GLOBALS['login'] = @json_decode(base64_decode($_COOKIE['X5_login']), true) ?? null;
+    if(isset($GLOBALS['login']['userid']) && $GLOBALS['login']['userid'] > 0 && isset($GLOBALS['login']['fingerprint']) && $GLOBALS['login']['fingerprint'] == fingerprint()) {
+        $GLOBALS['ME_id'] = intval($GLOBALS['login']['userid']);
+        $GLOBALS['ME'] = XUser::load($GLOBALS['ME_id']);
+    }
+}
 //
 if (App::config('composer') && is_file(DIR_VENDOR . 'autoload.php')) {
     include_once DIR_VENDOR . 'autoload.php';
@@ -21,7 +33,7 @@ if (App::config('composer') && is_file(DIR_VENDOR . 'autoload.php')) {
 if (is_null(App::$object) && is_null(App::$action)) {
     Response::deliver('<!DOCTYPE html><html lang><head>' .
         '<meta name="viewport" content="width=device-width, initial-scale=1" />' .
-        '<script>window.BASEURL="' . BASEURL . '";window.LANG="' . Translation::$LANG . '";</script>' .
+        '<script>window.BASEURL="' . BASEURL . '";window.LANG="' . Translation::$LANG . '";window.ME=' . $GLOBALS['ME']->export_js() . ';</script>' .
         '<script src="js/xtreme" async></script>' .
         '</head></html>');
 } else {

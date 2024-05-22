@@ -50,6 +50,37 @@ class AppClass {
                 }
             }
         }
+        setTimeout(function() {
+            document.querySelectorAll('[data-form="login"]').forEach(element => {
+                const form_config = FORMS[element.dataset.form] ?? null;
+                const Form_login = new FormClass(element, form_config);
+                Form_login.generate();
+                element.append(Form_login.dom);
+            });
+        }, 10);
+    }
+
+    get_object(object_path, callback, parse_json = true, debug = false) {
+        if(debug) {
+            console.log('X5::get_object() - Call: ' + object_path);
+        }
+        fetch(object_path)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('X5::Error - Object not found (' + object_path + ')');
+                }
+                return response.text();
+            })
+            .then(data => {
+                if(typeof callback == 'function') {
+                    callback(is_json(data) ? JSON.parse(data) : data);
+                } else if(typeof window[callback] == 'function') {
+                    window[callback](is_json(data) ? JSON.parse(data) : data);
+                }
+                if(debug) {
+                    console.log('X5::get_object() - ' + object_path, is_json(data) ? JSON.parse(data) : data);
+                }
+            });
     }
 
 }

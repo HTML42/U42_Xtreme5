@@ -62,3 +62,9 @@ class Translation {
         }
     }
 }
+
+if(!function_exists('_')) {
+    function _($key = null) {
+        return Translation::get($key);
+    }
+}

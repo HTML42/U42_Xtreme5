@@ -1,0 +1,33 @@
+.xbutton, .xbutton--grey {
+    ._xbutton();
+}
+.xbutton--main {
+    ._xbutton();
+    background-color: @color_main_dark;
+    &:hover {
+        background-color: @color_main_darker;
+    }
+}
+.xbutton--secondary {
+    ._xbutton();
+    background-color: @color_secondary_dark;
+    &:hover {
+        background-color: @color_secondary_darker;
+    }
+}
+._xbutton() {
+    .h(@distance_normal * 2);
+    display: inline-block;
+    position: relative;
+    padding: 0 @distance_big;
+    border-radius: 2px;
+    border: 0 none;
+    text-align: center;
+    min-width: 200px;
+    transition: 0.2s linear background-color, 0.2s linear color;
+    color: #EEE;
+    font-weight: 700;
+    &:hover {
+        color: #FFF;
+    }
+}

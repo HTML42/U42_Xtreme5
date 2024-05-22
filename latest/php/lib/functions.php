@@ -31,3 +31,32 @@ function debug($var, $height = 'auto', $width = 'auto') {
     echo htmlspecialchars(ob_get_clean());
     echo '</pre>';
 }
+function xhash($input) {
+    if(!is_string($input)) {
+        $input = @json_encode($input);
+    }
+    if(!is_string($input)) {
+        return null;
+    }
+    $hash = sha1($input . 'X5!') . md5($input . 'X5!');
+    $hash = strtoupper($hash);
+    return $hash;
+}
+function xhash_check($input, $hash) {
+    $hash = strtoupper($hash);
+    return $hash == xhash($input);
+}
+function remote_ip() {
+    if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+        return $_SERVER["HTTP_CF_CONNECTING_IP"];
+    } else if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+        return $_SERVER["HTTP_X_FORWARDED_FOR"];
+    } else if (isset($_SERVER['REMOTE_ADDR'])) {
+        return $_SERVER['REMOTE_ADDR'];
+    } else {
+        return null;
+    }
+}
+function fingerprint() {
+    return md5($_SERVER['HTTP_USER_AGENT'] . remote_ip());
+}

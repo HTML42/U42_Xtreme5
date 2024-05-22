@@ -8,13 +8,14 @@ $files = array(
     File::i('js/classes/router.class.js')->path,
     File::i('js/classes/template.class.js')->path,
     File::i('js/classes/translation.class.js')->path,
+    File::i('js/classes/form.class.js')->path,
     File::i('js/functions.js')->path,
 );
 $files = array_merge($files, glob(DIR_PROJECT . 'js/controller/*.controller.js'));
 $files[] = File::i('js/bootstrap.js');
 $templates = array_merge(File::ls(DIR_X5_TEMPLATES, true, true), File::ls(DIR_PROJECT_TEMPLATES, true, true));
 $translations = Translation::get_all();
-$Js = new Js($files, $templates, $translations);
+$Js = new Js($files, $templates, $translations, App::$config['forms']);
 App::$mime = 'application/javascript';
 App::$encoding = 'UTF-8';
 

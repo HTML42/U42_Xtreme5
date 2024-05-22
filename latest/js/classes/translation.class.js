@@ -1,12 +1,16 @@
 class TranslationClass {
-    constructor(translation_key) {
+    constructor(translation_key, as_bool = false) {
         this.key_raw = translation_key;
         this.translation = null;
         this.keys = [];
         if (typeof this.key_raw == 'string') {
             this.key_raw = this.key_raw.trim();
             let result = this.fetch_translation();
-            this.result = result ? result : '[Missing Translation::' + this.key_raw + ']';
+            if(as_bool) {
+                this.result = result ? result : null;
+            } else {
+                this.result = result ? result : '[Missing Translation::' + this.key_raw + ']';
+            }
         } else {
             this.result = '[TranslationError::KeyIsNotString]';
         }
@@ -30,9 +34,9 @@ class TranslationClass {
 function set_language(lang) {
     window.LANG = lang.trim().toLowerCase();
 }
-function _(translation_key) {
+function _(translation_key, as_bool = false) {
     if(typeof translation_key === 'string') {
-        return (new TranslationClass(translation_key)).result;
+        return (new TranslationClass(translation_key, as_bool)).result;
     }
     return null;
 }

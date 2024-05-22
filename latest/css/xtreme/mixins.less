@@ -11,3 +11,16 @@
     padding: 0;
     margin: 0;
 }
+.clear() {
+    clear: both;
+    display: table;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+.clear_after() {
+    &:after {
+        .clear();
+        content: '';
+    }
+}
