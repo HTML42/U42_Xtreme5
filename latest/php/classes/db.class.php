@@ -131,6 +131,7 @@ class DB
         file_put_contents($File_table->path, json_encode($table_data));
         self::$_CACHE['table'][$table] = null;
         file_put_contents($File_meta->path, json_encode($meta));
+        usleep(999);
         return $data['id'];
     }
 

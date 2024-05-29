@@ -24,10 +24,10 @@ class Curl
 
     public static function get_cached($url, $ttl = 3600)
     {
-        if (Cache::get($url)) {
-            return Cache::get($url);
+        if (Cache::get($url, $ttl)) {
+            return Cache::get($url, $ttl);
         } else {
-            return Cache::set($url, self::get($url), $ttl);
+            return Cache::set($url, self::get($url));
         }
     }
 
