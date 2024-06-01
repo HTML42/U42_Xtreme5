@@ -41,3 +41,36 @@ function transform_datahref(element) {
         });
     }
 }
+//
+function loop(input, callback) {
+    if (typeof callback === 'function') {
+        if (typeof input === 'object' && typeof input.forEach === 'function') {
+            input.forEach(function(value, key) {
+                callback(value, key);
+            });
+        } else if (typeof input === 'object') {
+            for (let key in input) {
+                if (input.hasOwnProperty(key)) {
+                    callback(input[key], key);
+                }
+            }
+        } else if (typeof input === 'string' || typeof input === 'number') {
+            callback(input, 0);
+        }
+    }
+}
+//
+function generate_html(config) {
+    if(typeof config.cssclass != 'string' || config.cssclass.length <= 0) {
+        config.cssclass = generate_id(4);
+    }
+    let wrap = document.createElement('div');
+    wrap.className = config.cssclass;
+    loop(config.items, function(html, key) {
+        let item = document.createElement('div');
+        item.className = config.cssclass + '_' + key;
+        item.innerHTML = html;
+        wrap.appendChild(item);
+    });
+    return wrap;
+}
