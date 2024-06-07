@@ -33,10 +33,10 @@ class XObject
     public static function load($id)
     {
         $class = get_called_class();
-        if (!isset(self::$_CACHE['instances'][$id])) {
-            self::$_CACHE['instances'][$id] = new $class($id);
+        if (!isset($class::$_CACHE['instances'][$id])) {
+            $class::$_CACHE['instances'][$id] = new $class($id);
         }
-        return self::$_CACHE['instances'][$id];
+        return $class::$_CACHE['instances'][$id];
     }
 
     public static function create($data)

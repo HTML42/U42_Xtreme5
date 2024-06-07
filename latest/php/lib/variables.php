@@ -11,6 +11,7 @@ define('DIR_PROJECT_PHP_LIB', DIR_PROJECT_PHP . 'lib/');
 define('DIR_PROJECT_PHP_CLASSES', DIR_PROJECT_PHP . 'classes/');
 define('DIR_PROJECT_OBJECTS', DIR_PROJECT_PHP . 'objects/');
 define('DIR_PROJECT_TEMPLATES', DIR_PROJECT . 'templates/');
+define('DIR_DIST', DIR_PROJECT . 'dist/');
 define('DIR_VENDOR', DIR_PROJECT . 'vendor/');
 define('DIR_PROJECT_CONFIG', DIR_PROJECT . 'config/');
 define('DIR_CACHE', DIR_X5 . '_cache/');

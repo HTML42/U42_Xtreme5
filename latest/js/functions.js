@@ -5,13 +5,13 @@ function is_dom(element) {
     return typeof element === 'object' && element !== null && typeof element.tagName != 'undefined';
 }
 function is_json(input) {
-    if(typeof input != 'string') {
+    if (typeof input != 'string') {
         return false;
     }
-    if(input.search(/\[/) == -1 && input.search(/\{/) == -1 ) {
+    if (input.search(/\[/) == -1 && input.search(/\{/) == -1) {
         return false;
     }
-    if(input.search(/\]/) == -1 && input.search(/\}/) == -1 ) {
+    if (input.search(/\]/) == -1 && input.search(/\}/) == -1) {
         return false;
     }
     return true;
@@ -28,12 +28,12 @@ function generate_id(length = 8) {
 }
 //
 function transform_datahref(element) {
-    if(typeof element !== 'object' || element ===  null) {
+    if (typeof element !== 'object' || element === null) {
         element = document.querySelector('body');
     }
-    if(is_dom(element)) {
+    if (is_dom(element)) {
         const Router = new RouterClass();
-        element.querySelectorAll('[data-href]:not([data-linked])').forEach(function(link) {
+        element.querySelectorAll('[data-href]:not([data-linked])').forEach(function (link) {
             link.dataset.linked = true;
             link.onclick = function () {
                 Router.redirect(link.dataset.href);
@@ -45,7 +45,7 @@ function transform_datahref(element) {
 function loop(input, callback) {
     if (typeof callback === 'function') {
         if (typeof input === 'object' && typeof input.forEach === 'function') {
-            input.forEach(function(value, key) {
+            input.forEach(function (value, key) {
                 callback(value, key);
             });
         } else if (typeof input === 'object') {
@@ -59,14 +59,37 @@ function loop(input, callback) {
         }
     }
 }
+function rand(input, callback, amount = 1) {
+    if (typeof callback === 'function') {
+        let hits = 0;
+        let selectedItems = {};
+        let totalItems = Object.keys(input).length;
+
+        while (hits < amount) {
+            loop(input, function (item, key) {
+                if (hits < amount && !selectedItems.hasOwnProperty(key) && Math.random() <= (amount / totalItems)) {
+                    selectedItems[key] = item;
+                    hits++;
+                }
+            });
+        }
+
+        if (amount === 1) {
+            let firstKey = Object.keys(selectedItems)[0];
+            callback(selectedItems[firstKey], firstKey);
+        } else {
+            callback(selectedItems);
+        }
+    }
+}
 //
 function generate_html(config) {
-    if(typeof config.cssclass != 'string' || config.cssclass.length <= 0) {
+    if (typeof config.cssclass != 'string' || config.cssclass.length <= 0) {
         config.cssclass = generate_id(4);
     }
     let wrap = document.createElement('div');
     wrap.className = config.cssclass;
-    loop(config.items, function(html, key) {
+    loop(config.items, function (html, key) {
         let item = document.createElement('div');
         item.className = config.cssclass + '_' + key;
         item.innerHTML = html;
