@@ -5,13 +5,15 @@ class RouterClass {
             return null;
         }
         location_hash = location_hash.trim();
-        let route_match = location_hash.match(/\#\!([^\/]+)\/*([^\/]*)/i);
-        let route_path = ['index', 'index'];
-        if(route_match[1] && route_match[1].length) {
-            route_path[0] = route_match[1];
-        }
-        if(route_match[2] && route_match[2].length) {
-            route_path[1] = route_match[2];
+        let route_match = location_hash.match(/\#\!([^\/]+)\/*([^\/]*)\/*([^\/]*)\/*([^\/]*)\/*([^\/]*)/i);
+        let route_path = ['index', 'index', null, null, null];
+        for(let i = 1 ; i <= 5 ; i++) {
+            if((route_match[i] && route_match[i].length) || typeof route_match[i] == 'number' || route_match[i] === '0' || route_match[i] === 'false' || route_match[i] === 'null') {
+                route_path[i - 1] = route_match[i];
+                if(route_path[i - 1] == parseInt(route_path[i - 1])) {
+                    route_path[i - 1] = parseInt(route_path[i - 1]);
+                }
+            }
         }
         return route_path;
     }
@@ -21,8 +23,15 @@ class RouterClass {
             path = path.split('/');
         }
         if(typeof path == 'object' && path.length) {
-            location.hash = '#!' + path[0] + '/' + path[1];
+            let _hash = '#!';
+            for(let i = 0 ; i < path.length ; i++) {
+                _hash += path[i] + '/';
+            }
+            location.hash = _hash.substring(0, _hash.length - 1);
         }
         setTimeout(App.render, 1);
     }
+}
+function get_route() {
+    return (new RouterClass).route();
 }

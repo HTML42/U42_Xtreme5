@@ -60,11 +60,15 @@ class AppClass {
         }, 10);
     }
 
-    get_object(object_path, callback, parse_json = true, debug = false) {
+    get_object(object_path, callback, parse_json = true, debug = false, data = [], method = 'GET') {
         if(debug) {
             console.log('X5::get_object() - Call: ' + object_path);
         }
-        fetch(object_path)
+        let fetch_meta = {method: method.toUpperCase()};
+        if(length(data) > 0) {
+            fetch_meta.body = JSON.stringify(data);
+        }
+        fetch(object_path, fetch_meta)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('X5::Error - Object not found (' + object_path + ')');
@@ -81,6 +85,10 @@ class AppClass {
                     console.log('X5::get_object() - ' + object_path, is_json(data) ? JSON.parse(data) : data);
                 }
             });
+    }
+
+    post_object(object_path, data, callback, parse_json = true, debug = false) {
+        this.get_object(object_path, callback, parse_json, debug, data, 'POST');
     }
 
 }

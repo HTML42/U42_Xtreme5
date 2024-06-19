@@ -6,6 +6,7 @@ class XUser extends XObject {
     public $insert_date, $update_date, $delete_date;
     public $is_admin, $is_root, $is_active, $is_login;
     public $groups = [];
+    public $groups_names = [];
 
     public static $_CACHE = [
         'instances' => [],
@@ -21,6 +22,12 @@ class XUser extends XObject {
             $this->is_active = !$this->db_row['delete_date'];
             $this->is_login = isset($GLOBALS['ME_id']) && $GLOBALS['ME_id'] === $this->id;
             $this->groups = DB::select('users_groups', ['users_id' => $this->id], false);
+            foreach($this->groups as $index => $groups_assign) {
+                $this->groups[$index] = DB::select_first('groups', $groups_assign['groups_id'], false);
+            }
+            foreach($this->groups as $group) {
+                array_push($this->groups_names, $group['name']);
+            }
         }
     }
 

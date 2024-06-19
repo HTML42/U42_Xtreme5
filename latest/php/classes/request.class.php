@@ -33,6 +33,14 @@ class Request
             return $default;
         }
         $key = trim($key);
+        //
+        $from_json_body = file_get_contents('php://input');
+        if(is_string($from_json_body) && strlen($from_json_body) > 2 && is_json($from_json_body)) {
+            foreach(json($from_json_body) as $k => $v) {         
+                $_POST[$k] = $v;       
+            }
+        }
+        //
         $sources = [
             'post' => $_POST,
             'get' => $_GET,

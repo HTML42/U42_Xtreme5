@@ -9,6 +9,18 @@ function is_url($string) {
     }
     return substr($string, 0, 5) == 'http:' || substr($string, 0, 6) == 'https:';
 }
+function is_json($input) {
+    if(!is_string($input) || strlen($input) <= 1) {
+        return false;
+    }
+    if((strstr($input, '{') && strstr($input, '}')) || (strstr($input, '[') && strstr($input, ']'))) {
+        return $input;
+    }
+    return false;
+}
+function json($input) {
+    return is_json($input) ? @json_decode($input, true) : [];
+}
 
 function debug($var, $height = 'auto', $width = 'auto') {
     $backtrace = debug_backtrace();

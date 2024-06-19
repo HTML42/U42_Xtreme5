@@ -83,11 +83,20 @@ function rand(input, callback, amount = 1) {
     }
 }
 //
-function generate_html(config) {
+function generate_html(config, as_string = false) {
     if (typeof config.cssclass != 'string' || config.cssclass.length <= 0) {
         config.cssclass = generate_id(4);
     }
-    let wrap = document.createElement('div');
+    if (typeof config.tag != 'string' || config.tag.length <= 0) {
+        config.tag = 'div';
+    }
+    if (typeof config.data != 'object' || config.data.length <= 0) {
+        config.data = [];
+    }
+    if (typeof config.attr != 'object' || config.attr.length <= 0) {
+        config.attr = [];
+    }
+    let wrap = document.createElement(config.tag);
     wrap.className = config.cssclass;
     loop(config.items, function (html, key) {
         let item = document.createElement('div');
@@ -95,5 +104,31 @@ function generate_html(config) {
         item.innerHTML = html;
         wrap.appendChild(item);
     });
-    return wrap;
+    loop(config.data, function(value, key) {
+        wrap.setAttribute('data-' + key, value);
+    });
+    loop(config.attr, function(value, key) {
+        wrap.setAttribute(key, value);
+    });
+    return as_string === true ? wrap.outerHTML : wrap;
+}
+
+function length(input) {
+    if(typeof input == 'string') {
+        return input.trim().length;
+    }
+    if(typeof input == 'number') {
+        return input.toString().length;
+    }
+    if(typeof input == 'object') {
+        if(typeof input.length != 'undefined') {
+            return input.length;
+        }
+        let i, count = 0;
+        for(i in input) {
+            count++;
+        }
+        return count;
+    }
+    return null;
 }
