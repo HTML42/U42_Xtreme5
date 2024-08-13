@@ -51,7 +51,7 @@ class AppClass {
             }
         }
         setTimeout(function() {
-            document.querySelectorAll('[data-form="login"]').forEach(element => {
+            document.querySelectorAll('[data-form]').forEach(element => {
                 const form_config = FORMS[element.dataset.form] ?? null;
                 const Form_login = new FormClass(element, form_config);
                 Form_login.generate();

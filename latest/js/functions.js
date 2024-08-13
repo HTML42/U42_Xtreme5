@@ -90,6 +90,9 @@ function generate_html(config, as_string = false) {
     if (typeof config.tag != 'string' || config.tag.length <= 0) {
         config.tag = 'div';
     }
+    if (typeof config.itemstag != 'string' || config.itemstag.length <= 0) {
+        config.itemstag = 'div';
+    }
     if (typeof config.data != 'object' || config.data.length <= 0) {
         config.data = [];
     }
@@ -99,11 +102,18 @@ function generate_html(config, as_string = false) {
     let wrap = document.createElement(config.tag);
     wrap.className = config.cssclass;
     loop(config.items, function (html, key) {
-        let item = document.createElement('div');
-        item.className = config.cssclass + '_' + key;
-        item.innerHTML = html;
-        wrap.appendChild(item);
+        if(is_dom(html)) {
+            wrap.appendChild(html);
+        } else {
+            let item = document.createElement(config.itemstag);
+            item.className = config.cssclass + '_' + key;
+            item.innerHTML = html;
+            wrap.appendChild(item);
+        }
     });
+    if(!config.items && config.innerHTML) {
+        wrap.innerHTML = config.innerHTML;
+    }
     loop(config.data, function(value, key) {
         wrap.setAttribute('data-' + key, value);
     });
