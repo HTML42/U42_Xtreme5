@@ -1,0 +1,97 @@
+{
+    "app": {
+        "name": "Mark Paspirgilis",
+        "domain": "markpaspirgilis.com"
+    },
+    "menu": {
+        "login": "Login",
+        "logout": "Logout",
+        "home": "Home",
+        "users": "Users",
+        "imprint": "Imprint",
+        "privacy": "Privacy",
+        "support": "Support",
+        "registration": "Registration",
+        "settings": "Settings",
+        "index": "Startseite",
+        "favourites": "Favourites",
+        "admin": "Administration",
+        "upload": "Upload",
+        "aboutme": "Me",
+        "experience": "EXP",
+        "skills": "Skills",
+        "projects": "Projekte"
+    },
+    "forms": {
+        "labels": {
+            "username": "Username",
+            "password": "Password",
+            "password2": "Password again",
+            "email": "E-Mail",
+            "login": "Login",
+            "name": "Name",
+            "submit": "Submit",
+            "theme": "Theme",
+            "categories_shutterstock": "Shutterstock Categories",
+            "keywords_shutterstock": "Shutterstock Keywords",
+            "description": "Description",
+            "image": "Upload Image"
+        },
+        "please_choose": "Please choose",
+        "callbacks": {
+            "success": "Form submitted successfully!",
+            "fail": "Form submission failed."
+        }
+    },
+    "words": {
+        "welcome": "Welcome",
+        "administration": "Administration",
+        "yes": "Yes",
+        "no": "No",
+        "user_id": "User-ID",
+        "users_id": "User-ID"
+    },
+    "captions": {
+        "index": {
+            "index": "Welcome"
+        },
+        "users": {
+            "login": "Login"
+        },
+        "admin": {
+            "overview": "Admin Overview",
+            "users": "Users"
+        },
+        "upload": {
+            "image": "Upload Image"
+        }
+    },
+    "tables": {
+        "captions": {
+            "name": "Name",
+            "email": "Email",
+            "admin": "Admin",
+            "active": "Active",
+            "key": "Key",
+            "subdomain": "Subdomain"
+        }
+    },
+    "errors": {
+        "login": {
+            "deleted": "Your account has been deleted.",
+            "id": "Invalid login ID.",
+            "notfound": "User not found."
+        },
+        "upload": {
+            "invalid_file_type": "Invalid file type. Please upload an image file.",
+            "file_too_small": "The file is too small. It must be at least 1KB.",
+            "file_missing": "No file was uploaded. Please select a file to upload.",
+            "invalid_theme": "Invalid theme selected. Please choose a valid theme.",
+            "theme_missing": "No theme selected. Please choose a theme.",
+            "failed_to_process_image": "Failed to process the image. Please try again."
+        },
+        "users": {
+            "not_found": "User not found."
+        }
+    }
+}

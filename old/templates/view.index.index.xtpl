@@ -1,4 +1,0 @@
-h1
-    translate:words.welcome
-div.page_element
-    translate:index_welcome
