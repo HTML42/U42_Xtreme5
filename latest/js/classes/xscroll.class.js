@@ -1,4 +1,4 @@
-class XScroll {
+class XScrollClass {
     constructor() {
         this.init_scroll_handler();
     }
@@ -44,4 +44,4 @@ class XScroll {
     }
 }
 
-window.XScroll = new XScroll();
+window.XScroll = new XScrollClass();
