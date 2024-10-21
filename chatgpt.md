@@ -361,3 +361,61 @@ Page.Template = new TemplateClass('view.index.index');
 - **is_dom(element)**: Überprüft, ob ein Element ein DOM-Objekt ist.
 - **generate_id(length)**: Erzeugt eine zufällige ID.
 - **length(input)**: Bestimmt die Länge eines Strings, einer Zahl oder eines Arrays/Objekts.
+
+
+## RouterClass
+
+The `RouterClass` handles URL hash navigation using the format `#!controller/view/parameter1/parameter2`. It parses the URL and redirects to the correct controller and view combination.
+
+**Main methods:**
+- `route()`: Parses the URL and returns the controller, view, and up to three parameters.
+- `redirect(path)`: Redirects to a new route by changing the URL hash.
+
+---
+
+## Translations
+
+The `TranslationClass` provides dynamic translations. Translations are stored in files like `l18n.json` and accessed via keys.
+
+**Usage examples:**
+- In templates: `translate:captions.users.view`
+- In JS: `new TranslationClass('messages.no_tasks_found').result;`
+
+**Main method:**
+- `fetch_translation()`: Fetches the translation for a given key. If the key is missing, it returns a fallback error message like `[Missing Translation::key]`.
+
+---
+
+## Template Style
+
+Templates are written using a simplified Emmet-like syntax. Data is passed via `data-attributes` and translations are dynamically inserted.
+
+**Example:**
+```javascript
+h1.page_caption
+    translate:captions.users.view
+    span[data-uservar="name"]
+h2
+    translate:words.karma
+div.karmabar[data-karma]
+    div.karmabar_bar
+ul[data-mytasks]
+```
+
+**Main points:**
+- `translate:key`: For dynamic translations.
+- `data-uservar="name"`: Placeholder for dynamic data from JS.
+
+---
+
+## Controller Style
+
+Controllers manage loading templates, routing, and fetching data. Each controller extends the `ControllerClass`.
+
+**Example:**
+In the `view_view()` method, use `get_object_cached` to fetch user data and update the template dynamically.
+
+**Main points:**
+- Use `route()` to parse the URL and get parameters.
+- Use `get_object_cached()` for API requests with caching (e.g., user data or tasks).
+- Update the template using `data-attributes` and dynamically insert content.
