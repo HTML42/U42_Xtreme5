@@ -93,5 +93,8 @@
         "users": {
             "not_found": "User not found."
         }
+    },
+    "popup": {
+        "title": "Xtreme Popup"
     }
 }

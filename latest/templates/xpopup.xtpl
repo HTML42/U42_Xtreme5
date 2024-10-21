@@ -1,0 +1,5 @@
+div.xpopup[data-size="m"]
+    div.xpopup_header
+        div.xpopup_title
+        div.xpopup_close
+    div.xpopup_content

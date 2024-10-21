@@ -1,0 +1,107 @@
+.xpopup {
+    @xpopup_header_height: @distance_huge;
+    @xpopup_z_index: 9999;
+    @xpopup_border_radius_size: @distance_small;
+    display: none;
+    position: fixed;
+    .xpopup_size_position(80%);
+    background-color: #EEE;
+    border: 2px solid #CCC;
+    border-radius: @xpopup_border_radius_size;
+    z-index: @xpopup_z_index;
+    &.xpopup_visible {
+        display: block;
+        /* Animation hinzufügen */
+    }
+
+    &_fadeout {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: @xpopup_z_index - 1;
+        &.xpopup_visible {
+            display: block;
+        }
+    }
+    &_header {
+        .h(@xpopup_header_height);
+        border-bottom: 1px solid #CCC;
+        margin-left: @distance_normal / 2;
+        margin-right: @distance_normal / 2;
+    }
+
+    &_title {
+        .h(@xpopup_header_height);
+        font-size: @font_size_big;
+        font-weight: 700;
+        text-align: center;
+        color: #666;
+        border-radius: @xpopup_border_radius_size @xpopup_border_radius_size 0 0;
+        padding-left: @distance_normal / 2;
+        padding-right: @distance_normal;
+    }
+
+    &_close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 0 @xpopup_border_radius_size 0 0;
+        cursor: pointer;
+        height: @xpopup_header_height;
+        width: @xpopup_header_height;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            height: 70%;
+            width: 2px;
+            background-color: black; /* Farbe des „X“ */
+        }
+        &:before {
+            transform: rotate(45deg);
+        }
+        &:after {
+            transform: rotate(-45deg);
+        }
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    &_content {
+        position: absolute;
+        top: @xpopup_header_height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: @distance_normal;
+        color: #333;
+        min-height: calc(~"100% - @{xpopup_header_height}");
+    }
+
+    &[data-size="s"] {
+        .xpopup_size_position(50%);
+    }
+
+    &[data-size="m"] {
+        .xpopup_size_position(80%);
+    }
+
+    &[data-size="l"] {
+        .xpopup_size_position(90%);
+    }
+}
+.xpopup_size_position(@size: 80%) {
+    @margin: (100% - @size) / 2;
+    top: @margin;
+    right: @margin;
+    bottom: @margin;
+    left: @margin;
+}
