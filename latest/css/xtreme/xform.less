@@ -7,7 +7,7 @@
     &_row + &_row {
         margin-top: @distance_normal * 1.5;
     }
-    &_input {
+    &_input, &_textarea {
         display: block;
         width: 100%;
         border: 0 none;
@@ -15,6 +15,12 @@
         outline: none;
         padding: 0 @input_padding;
         .h(@input_size);
+    }
+    &_textarea {
+        height: @input_size * 3.5;
+        line-height: 1.1em;
+        padding: @distance_tiny @input_padding;
+        resize: vertical;
     }
     &_select {
         option {
