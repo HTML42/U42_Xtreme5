@@ -156,7 +156,7 @@ class FormClass {
                 'value': '',
                 'selected': true,
             });
-            option.textContent = data.label.trim();
+            option.textContent = _(data.label.trim(), true) ?? data.label.trim();
             select.append(option);
         }
         //
