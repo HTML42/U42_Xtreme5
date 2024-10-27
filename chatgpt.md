@@ -469,3 +469,11 @@ function callback_user_registration_success() {
     setTimeout('location.reload(true)', 100);
 }
 ```
+
+## Objects Path
+In Xtreme Framework, objects/**/*.php files are API-like endpoints accessible via paths like BASEURL . 'captcha/image'.
+Framework Auto-Load: Every request to these paths loads the full framework with session handling and utilities ready.
+Session: Session is automatically started, so session variables (e.g., $_SESSION['captcha_code']) are available immediately.
+JSON Responses: Use Response::ajax(data, status_code, errors) for JSON responses with data and error handling.
+File/Image Responses: For binary content like images, set App::$mime (e.g., image/png) and stream with Response::deliver(content).
+Example: objects/captcha/image.php generates a Captcha image accessible at BASEURL . 'captcha/image', stores the code in $_SESSION['captcha_code'], sets App::$mime = 'image/png', and delivers with Response::deliver(image_data).

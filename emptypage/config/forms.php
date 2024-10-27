@@ -20,6 +20,8 @@ $formparts['userbasics'] = [
         'min-length' => 4,
     ]),
 ];
+$password2_field = $formparts['userbasics']['password'];
+$password2_field['label'] = 'forms.labels.password2';
 
 App::$config['forms'] = [
     'login' => array_merge($formparts['userbasics'], [
@@ -31,5 +33,26 @@ App::$config['forms'] = [
             'submit' => 'forms.labels.login'
         ],
     ]),
-    'registration' => [],
+    'registration' => [
+        'username' => $formparts['userbasics']['username'],
+        'email' => array_merge($formitem_Default, [
+            'label' => 'forms.labels.email',
+            'type' => 'email',
+            'required' => true,
+        ]),
+        'password' => $formparts['userbasics']['password'],
+        'password2' => $password2_field,
+        'captcha' => array_merge($formitem_Default, [
+            'label' => 'forms.labels.captcha',
+            'type' => 'captcha',
+            'required' => true,
+        ]),
+        '_' => [
+            'ajax' => BASEURL . 'users/registration',
+            'success' => 'callback_user_registration_success',
+        ],
+        'submitrow' => [
+            'submit' => 'forms.labels.submit'
+        ],
+    ],
 ];

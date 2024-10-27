@@ -85,6 +85,10 @@ function callback_login_success() {
     (new RouterClass()).redirect('index/index');
     setTimeout('location.reload(true)', 100);
 }
+function callback_user_registration_success() {
+    (new RouterClass()).redirect('users/login');
+    setTimeout('location.reload(true)', 100);
+}
 
 let HOSTNAME = location.hostname.toLowerCase().trim();
 let IS_LOCAL = HOSTNAME == 'localhost' || HOSTNAME.search('.local') != -1 || HOSTNAME.search('.projects') != -1;

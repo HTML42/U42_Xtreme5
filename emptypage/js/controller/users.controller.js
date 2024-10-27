@@ -24,6 +24,12 @@ class UsersController extends ControllerClass {
         }, 500);
         return Page;
     }
+    view_registration() {
+        let Page = new PageClass();
+        Page.title = 'Users - Registration';
+        Page.Template = new TemplateClass('view.users.registration');
+        return Page;
+    }
 
 }
 window.UsersController = UsersController;

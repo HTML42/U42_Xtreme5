@@ -28,6 +28,24 @@
     }
     &_inputwrap {
     }
+    &_captcha {
+        &_wrap {
+            display: flex;
+            flex-direction: row;
+            img, button {
+                width: auto;
+                height: @input_size;
+            }
+            button {
+                width: 100px;
+            }
+            input {
+                width: 100%;
+            }
+        }
+        &_image {
+        }
+    }
     &_inputerror {
         color: rgba(255, 0, 0, 0.5);
         position: absolute;

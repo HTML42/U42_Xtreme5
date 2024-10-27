@@ -10,8 +10,15 @@ header#page_header
                 a[data-href="#!index/index"]
                     translate:menu.index
             li
-                a[data-href="#!index/index"]
+                a[data-href="users/logout"]
+                    translate:menu.logout
+        ul.clean_list[data-status="loggedout"]
+            li
+                a[data-href="index/index"]
                     translate:menu.index
             li
-                a[data-href="#!index/index"]
-                    translate:menu.index
+                a[data-href="users/login"]
+                    translate:menu.login
+            li
+                a[data-href="users/registration"]
+                    translate:menu.registration

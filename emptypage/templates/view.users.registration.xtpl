@@ -1,0 +1,4 @@
+h1.page_caption
+    translate:captions.users.registration
+div.page_formbox
+    form[data-form="registration"]

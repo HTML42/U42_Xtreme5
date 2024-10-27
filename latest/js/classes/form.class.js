@@ -107,6 +107,10 @@ class FormClass {
             case 'textarea':
                 this.generate_row_textarea(row, input_data, input_key);
                 break;
+            //
+            case 'captcha':
+                this.generate_row_captcha(row, input_data, input_key);
+                break;
         }
         return row;
     }
@@ -234,6 +238,51 @@ class FormClass {
 
         textareawrap.append(textarea);
         parent.append(textareawrap);
+
+        const error = document.createElement('div');
+        error.setAttributes({
+            'class': 'xform_inputerror',
+        });
+        parent.append(error);
+
+        return parent;
+    }
+
+    generate_row_captcha(parent, data, key) {
+        const captcha_wrap = document.createElement('div');
+        captcha_wrap.setAttributes({
+            'class': 'xform_inputwrap xform_captcha_wrap',
+        });
+
+        const captcha_image = document.createElement('img');
+        captcha_image.setAttributes({
+            'class': 'xform_captcha_image',
+            'src': BASEURL + 'captcha/image?' + new Date().getTime(),
+            'alt': 'Captcha',
+        });
+
+        const refresh_button = document.createElement('button');
+        refresh_button.setAttributes({
+            'type': 'button',
+            'class': 'xform_captcha_refresh',
+        });
+        refresh_button.textContent = _('forms.labels.refresh_captcha') ?? 'New Captcha';
+
+        // Refresh captcha on button click
+        refresh_button.addEventListener('click', function () {
+            captcha_image.src = BASEURL + 'captcha/image?' + new Date().getTime();
+        });
+
+        const input = document.createElement('input');
+        input.setAttributes({
+            'class': 'xform_input xform_captcha_input',
+            'name': key ?? 'captcha',
+            'type': 'text',
+            'placeholder': _(data.label, true) ?? data.label ?? 'Enter Captcha',
+        });
+
+        captcha_wrap.append(refresh_button, captcha_image, input);
+        parent.append(captcha_wrap);
 
         const error = document.createElement('div');
         error.setAttributes({
