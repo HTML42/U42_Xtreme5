@@ -419,3 +419,53 @@ In the `view_view()` method, use `get_object_cached` to fetch user data and upda
 - Use `route()` to parse the URL and get parameters.
 - Use `get_object_cached()` for API requests with caching (e.g., user data or tasks).
 - Update the template using `data-attributes` and dynamically insert content.
+
+## Translations
+All translations must be defined statically in the **`translations.json`** format to avoid dynamic constructions. This is especially important for error messages, which must directly reference the specific field.
+
+Example:
+- **Incorrect Format**: `sprintf(_('errors.tasks.missing_field'), $field_config['label']);`
+- **Correct Format**: ` _('errors.tasks.missing_field.' . $field_name)`
+
+Each field name in forms receives a specific key in the **`translations.json`** file. Examples of static keys in **`translations.json`**:
+```json
+{
+    "errors": {
+        "tasks": {
+            "missing_field.title": "The title field is required.",
+            "min_length.description": "The description field must be at least 10 characters long."
+        }
+    }
+}
+```
+
+## Error Handling
+Error messages should be pre-configured for each validation and defined in **`translations.json`** for direct access without additional transformations. Error keys are composed of the **form section**, **field name**, and **error type**.
+
+### Example Structure for `task/create`:
+- **Field missing**: `errors.tasks.missing_field.title`
+- **Minimum length not met**: `errors.tasks.min_length.title`
+- **Invalid value**: `errors.tasks.invalid_number.duration`
+
+## Success Callbacks
+Success callbacks for actions should be consistently formatted as follows:
+
+```javascript
+function callback_task_create_success() {
+    (new RouterClass()).redirect('index/index');
+    setTimeout('location.reload(true)', 100);
+}
+```
+
+### Explanation:
+1. **Redirect**: Success callbacks always redirect to a standard page (e.g., the homepage) using `RouterClass`.
+2. **Page Reload**: Reloading the page after a short delay ensures the user interface is updated.
+
+### Application for Other Success Callbacks:
+Example for other forms like **user registration**:
+```javascript
+function callback_user_registration_success() {
+    (new RouterClass()).redirect('users/overview');
+    setTimeout('location.reload(true)', 100);
+}
+```
