@@ -1,0 +1,77 @@
+.xgeo {
+    display: flex;
+    flex-direction: column;
+
+    .xgeo_country {
+        margin-bottom: 10px;
+    }
+
+    .xgeo_search {
+        display: flex;
+        gap: 10px;
+
+        .xform_xgeo_address {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .xgeo_search_button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+    }
+
+    .xgeo_results {
+        .xgeo_results_list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+
+            li {
+                padding: 8px;
+                cursor: pointer;
+                
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+            }
+        }
+
+        .xgeo_results_msg {
+            display: none;
+            padding: 8px;
+            color: #999;
+
+            &.xgeo_results_msg--active {
+                display: block;
+            }
+        }
+    }
+
+    .xgeo_result {
+        margin-top: 10px;
+
+        .xgeo_selected_address {
+            display: block;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            color: #333;
+        }
+    }
+}

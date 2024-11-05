@@ -111,6 +111,10 @@ class FormClass {
             case 'captcha':
                 this.generate_row_captcha(row, input_data, input_key);
                 break;
+            //
+            case 'xgeo_address':
+                this.generate_row_xgeo_address(row, input_data, input_key);
+                break;
         }
         return row;
     }
@@ -290,6 +294,13 @@ class FormClass {
         });
         parent.append(error);
 
+        return parent;
+    }
+
+    generate_row_xgeo_address(parent, data, key) {
+        const Template_xgeo = new TemplateClass('xgeo');
+        new XGeoClass(Template_xgeo);
+        parent.append(Template_xgeo.dom);
         return parent;
     }
 

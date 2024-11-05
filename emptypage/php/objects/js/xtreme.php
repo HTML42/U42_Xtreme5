@@ -11,6 +11,7 @@ $files = array(
     File::i('js/classes/template.class.js')->path,
     File::i('js/classes/translation.class.js')->path,
     File::i('js/classes/form.class.js')->path,
+    File::i('js/classes/xgeo.class.js')->path,
     File::i('js/classes/xuser.class.js')->path,
     File::i('js/classes/xscroll.class.js')->path,
     File::i('js/functions.js')->path,

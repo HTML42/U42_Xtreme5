@@ -1,0 +1,15 @@
+div.xgeo
+    div.xgeo_country
+    div.xgeo_search
+        input[class="xform_input xform_xgeo_address"][type="text"]
+        button.xgeo_search_button[type="button"]
+            translate:forms.labels.search_button
+    div.xgeo_results
+        ul.xgeo_results_list
+        div.xgeo_results_msg
+            translate:forms.labels.no_results
+    div.xgeo_result
+        span.xgeo_selected_address
+        input[type="hidden"][name="latitude"]
+        input[type="hidden"][name="longitude"]
+        input[type="hidden"][name="country"]
