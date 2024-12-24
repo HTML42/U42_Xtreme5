@@ -115,7 +115,13 @@ class XGeoClass {
             this.message_container.classList.remove('xgeo_results_msg--active');
             suggestions.forEach(suggestion => {
                 const item = document.createElement('li');
+                const suggestion_array = suggestion.display_name.split(',').map(item => item.trim());
                 item.textContent = suggestion.display_name;
+                item.dataset.country = suggestion_array[suggestion_array.length - 1];
+                item.dataset.zip = suggestion_array[suggestion_array.length - 2];
+                item.dataset.city = suggestion_array[3];
+                item.dataset.street = suggestion_array[1];
+                item.dataset.housenumber = suggestion_array[0];
                 item.dataset.lat = suggestion.lat;
                 item.dataset.lng = suggestion.lng;
                 this.results_container.appendChild(item);
@@ -139,6 +145,14 @@ class XGeoClass {
                 lat_field.value = item.dataset.lat;
                 lng_field.value = item.dataset.lng;
             }
+            ['country', 'zip', 'city', 'street', 'housenumber'].forEach(field => {
+                const input = this.result_display_container.querySelector(`input[name="${field}"][type="hidden"]`);
+                if (input) {
+                    input.value = item.dataset[field] || '';
+                }
+            });
+    
+            console.log('item.dataset', item.dataset);
         }
     }
 

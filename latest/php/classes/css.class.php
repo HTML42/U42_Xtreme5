@@ -111,12 +111,12 @@ class Css
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */', '@charset "UTF-8";'] as $search_string) {
-            $css_code = str_replace($search_string, '', $css_code);
-        }
-        $css_code = trim($css_code);
-        $minifier = new MatthiasMullie\Minify\CSS();
-        $minifier->add($css_code);
-        $css_code = $minifier->minify();
+                   $css_code = str_replace($search_string, '', $css_code);
+               }
+               $css_code = trim($css_code);
+               $minifier = new MatthiasMullie\Minify\CSS();
+               $minifier->add($css_code);
+               $css_code = $minifier->minify();
         //
         return $css_code;
     }

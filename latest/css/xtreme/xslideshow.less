@@ -1,0 +1,29 @@
+[data-xslideshow] {
+    position: relative;
+    overflow: hidden;
+
+    > .xslide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+
+        &.xslide--active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+
+        &.xslide--first {
+            z-index: 1;
+        }
+
+        &.xslide--last {
+            z-index: 0;
+        }
+    }
+}

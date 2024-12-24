@@ -12,4 +12,7 @@ div.xgeo
         span.xgeo_selected_address
         input[type="hidden"][name="latitude"]
         input[type="hidden"][name="longitude"]
-        input[type="hidden"][name="country"]
+        input[type="hidden"][name="city"]
+        input[type="hidden"][name="zip"]
+        input[type="hidden"][name="street"]
+        input[type="hidden"][name="housenumber"]

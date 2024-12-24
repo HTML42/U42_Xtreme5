@@ -103,6 +103,12 @@ class FormClass {
             case 'select':
                 this.generate_row_select(row, input_data, input_key);
                 break;
+            case 'date':
+                this.generate_row_input(row, input_data, input_key, 'date');
+                break;
+            case 'time':
+                this.generate_row_input(row, input_data, input_key, 'time');
+                break;
             //
             case 'textarea':
                 this.generate_row_textarea(row, input_data, input_key);
