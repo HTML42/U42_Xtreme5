@@ -18,25 +18,36 @@ class TemplateClass {
         code = this.parse_lines(code);
         return code;
     }
-
     parse_prepare(code) {
-        code = code.replace(/(\.)([\w\d_-]+)/g, '[class="$2"]');
+        // Verarbeite Punkte (Klassen) außerhalb von Attributen
+        code = code.replace(/(?<!\[[^\]]*)(\.)([\w\d_-]+)/g, '[class="$2"]');
+    
+        // Verarbeite IDs
         code = code.replace(/(\#)([\w\d_-]+)/g, '[id="$2"]');
-
+    
+        // Verarbeite Attribute mit Punkten korrekt
+        code = code.replace(/(\[.*?=.*?")([\w\d:/?&._-]+)(".*?\])/g, (match, start, value, end) => {
+            // Punkte innerhalb von Attributwerten unangetastet lassen
+            return `${start}${value}${end}`;
+        });
+    
+        // Verarbeite mehrere Klassen für das gleiche Element korrekt
+        code = code.replace(/\[class="([^"]+)"\]\[class="([^"]+)"\]/g, '[class="$1 $2"]');
+    
         let lines = code.split("\n");
         let previousIndents = [0];
-
+    
         for (let i = 0; i < lines.length; i++) {
             let currentIndent = lines[i].search(/\S|$/);
             lines[i] = lines[i].trim();
-
+    
             if (currentIndent > previousIndents[previousIndents.length - 1]) {
                 previousIndents.push(currentIndent);
             } else {
                 while (
-                        previousIndents.length > 1 &&
-                        currentIndent < previousIndents[previousIndents.length - 1]
-                        ) {
+                    previousIndents.length > 1 &&
+                    currentIndent < previousIndents[previousIndents.length - 1]
+                ) {
                     previousIndents.pop();
                 }
             }
@@ -44,7 +55,8 @@ class TemplateClass {
         }
         return lines.join("\n");
     }
-
+    
+    
     parse_lines(code) {
         let lines = code.split("\n");
         let last_indent = -1;
