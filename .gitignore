@@ -28,3 +28,5 @@ install/test/*
 /install/test
 /install/test/
 /install/test/*
+
+.DS_Store
