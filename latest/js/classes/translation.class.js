@@ -14,6 +14,12 @@ class TranslationClass {
         } else {
             this.result = '[TranslationError::KeyIsNotString]';
         }
+        if (this.result === null || this.result === false ||
+                /\[Missing\s*Translation\:\:/.test(this.result) || /\[TranslationError\:\:/.test(this.result)) {
+            if (!window.MISSING_TRANSLATIONS.includes(this.key_raw)) {
+                window.MISSING_TRANSLATIONS.push(this.key_raw);
+            }
+        }
     }
 
     fetch_translation() {
@@ -42,4 +48,4 @@ function _(translation_key, as_bool = false) {
 }
 
 window.LANG = LANG || 'en';
-    
+window.MISSING_TRANSLATIONS = [];
