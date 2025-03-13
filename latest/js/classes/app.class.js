@@ -43,8 +43,12 @@ class AppClass {
                 const view_name = 'view_' + current_route[1];
                 if (Controller[view_name] && typeof Controller[view_name] === 'function') {
                     let Page = Controller[view_name]();
-                    if(typeof Page.Template === 'object' && Page.Template !== null && typeof Page.Template.dom === 'object' && Page.Template.dom) {
-                        document.querySelector('body main#page_main > article').append(Page.Template.dom);
+                    if(typeof Page === 'object' && Page !== null) {
+                        if(typeof Page.Template === 'object' && Page.Template !== null) {
+                            if(typeof Page.Template.dom === 'object' && Page.Template.dom) {
+                                document.querySelector('body main#page_main > article').append(Page.Template.dom);
+                            }
+                        }
                     }
                     document.querySelector('head title').innerHTML = Page.title;
                 }

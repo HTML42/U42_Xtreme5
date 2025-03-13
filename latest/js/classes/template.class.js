@@ -85,10 +85,15 @@ class TemplateClass {
                     }
                 }
             } else {
+                let has_class = false;
                 if(is_partial || is_translation) {
+                    has_class = /\[class="/.test(line);
                     line = line.replace(/\[class="([^"]+)"\]/g, ".$1");
                     line = line.replace(/translat[e|ion]\:/, '');
                     line = line.trim();
+                    if(has_class) {
+                        line = line.replace(/\s+/, '.');
+                    }
                 }
                 if (is_partial) {
                     const partial_key = line.replace(/^(partial):/, "").trim();

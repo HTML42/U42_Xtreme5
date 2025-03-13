@@ -42,7 +42,7 @@ class FormClass {
                             .then(data => {
                                 if (data.success) {
                                     if (typeof window[self.formconfig.success] == 'function') {
-                                        window[self.formconfig.success]();
+                                        window[self.formconfig.success](data);
                                     } else {
                                         alert(self.formconfig.success);
                                     }

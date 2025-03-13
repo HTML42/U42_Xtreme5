@@ -42,7 +42,7 @@ class Response
 
         echo $content;
     }
-    public static function ajax($response, $status, $errors = [])
+    public static function ajax($response, $status, $errors = [], $success = true)
     {
         if (!is_int($status)) {
             $status = 500;
@@ -50,7 +50,6 @@ class Response
         if (!is_array($errors)) {
             $errors = [];
         }
-        $success = ($status >= 200 && $status <= 299);
 
         $output = [
             'response' => $response,
