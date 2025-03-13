@@ -70,11 +70,3 @@ class XSlideshowClass {
         this.slides.forEach(slide => slide.classList.remove('xslide--active', 'xslide--first', 'xslide--last'));
     }
 }
-
-// Globale Initialisierung wie bei anderen X5-Klassen
-window.XSlideshow = {
-    init(selector = '[data-xslideshow]') {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => new XSlideshowClass(element));
-    }
-};
