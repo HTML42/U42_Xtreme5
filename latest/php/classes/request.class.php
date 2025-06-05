@@ -33,6 +33,9 @@ class Request
             return $default;
         }
         $key = trim($key);
+        if (is_string($order)) {
+            $order = [$order];
+        }
         //
         $from_json_body = file_get_contents('php://input');
         if(is_string($from_json_body) && strlen($from_json_body) > 2 && is_json($from_json_body)) {
