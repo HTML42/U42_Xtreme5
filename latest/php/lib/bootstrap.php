@@ -38,6 +38,7 @@ include DIR_X5_PHP_LIB . 'functions.php';
 include DIR_X5_PHP_CLASSES . 'app.class.php';
 include DIR_X5_PHP_CLASSES . 'request.class.php';
 include DIR_X5_PHP_CLASSES . 'xobject.class.php';
+include DIR_X5_PHP_CLASSES . 'translation.class.php';
 
 define('BASEURL', 'http' . (is_https() ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . '/' . Request::$url_path_to_script);
 

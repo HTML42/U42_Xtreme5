@@ -15,6 +15,7 @@ define('DIR_DIST', DIR_PROJECT . 'dist/');
 define('DIR_VENDOR', DIR_PROJECT . 'vendor/');
 define('DIR_PROJECT_CONFIG', DIR_PROJECT . 'config/');
 define('DIR_CACHE', DIR_X5 . '_cache/');
+define('DIR_TRANSLATIONS', DIR_PROJECT . 'translations/');
 
 
 define('FILE_ENVIRONMENT', DIR_PROJECT . 'environment');
