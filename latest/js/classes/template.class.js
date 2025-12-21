@@ -14,6 +14,9 @@ class TemplateClass {
     }
 
     parse(code) {
+        if (typeof code === "string") {
+            code = code.trim();
+        }
         code = this.parse_prepare(code);
         code = this.parse_lines(code);
         return code;
@@ -68,6 +71,9 @@ class TemplateClass {
             let current_indent = (line.match(/^>+/) || [""])[0].length;
             let new_element = null;
             line = line.replace(/^>+/, "");
+            if (line.trim() === "") {
+                return;
+            }
             const is_partial = line.trim().startsWith("partial:");
             const is_translation =
                     line.trim().startsWith("translate:") ||
