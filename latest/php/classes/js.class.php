@@ -55,7 +55,7 @@ class Js
         if (is_array($templates)) {
             $jsTemplates = 'var TEMPLATES = {';
             foreach ($templates as $template) {
-                $content = File::instance($template)->get_content();
+                $content = trim(File::instance($template)->get_content());
                 $jsTemplates .= '"' . basename($template, '.xtpl') . '":' . json_encode($content) . ',';
             }
             $jsTemplates = rtrim($jsTemplates, ',') . '};';
