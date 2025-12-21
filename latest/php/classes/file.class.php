@@ -114,7 +114,11 @@ class File
                 include $this->path;
                 return ob_get_clean();
             } else {
-                return file_get_contents($this->path);
+                $content = file_get_contents($this->path);
+                if ($this->ext() == 'xtpl') {
+                    $content = self::_trim_empty_lines($content);
+                }
+                return $content;
             }
         } else {
             return '';
@@ -193,6 +197,15 @@ class File
             self::$_CACHE['filenames'][$filepath] = $filename;
         }
         return self::$_CACHE['filenames'][$filepath];
+    }
+
+    public static function _trim_empty_lines($content) {
+        if (!is_string($content)) {
+            return $content;
+        }
+        $content = preg_replace('/\A(?:[ \t]*\r?\n)+/', '', $content);
+        $content = preg_replace('/(?:\r?\n[ \t]*)+\z/', '', $content);
+        return $content;
     }
 
     public static function normalize_folder($source) {
