@@ -1,13 +1,13 @@
 header#page_header
-    a[data-href="#!index/index"].logo
+    a[data-href="index/index"].logo
         translate:app.name
     nav.menu_main
         ul.clean_list
             li
-                a[data-href="#!index/index"]
+                a[data-href="index/index"]
                     translate:menu.index
             li
-                a[data-href="#!index/index"]
+                a[data-href="index/index"]
                     translate:menu.index
             li
                 a[data-href="users/logout"]
