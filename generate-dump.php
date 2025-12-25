@@ -24,46 +24,57 @@ foreach ($iterator as $fileInfo) {
 
 sort($files, SORT_STRING);
 
-$markdown = [];
-$markdown[] = '# Latest framework dump';
-$markdown[] = 'Erzeugt am ' . date(DATE_ATOM);
-$markdown[] = '';
+$handle = fopen($outputFile, 'w');
+
+if ($handle === false) {
+    fwrite(STDERR, "Konnte Ausgabedatei nicht öffnen: {$outputFile}\n");
+    exit(1);
+}
+
+$headerLines = [
+    '# Latest framework dump',
+    'Erzeugt am ' . date(DATE_ATOM),
+    '',
+];
+
+writeLines($handle, $headerLines);
 
 foreach ($files as $filePath) {
     $relativePath = 'latest/' . ltrim(str_replace($sourceDirectory, '', $filePath), DIRECTORY_SEPARATOR);
     $content = file_get_contents($filePath);
 
+    $section = ["## {$relativePath}"];
+
     if ($content === false) {
-        $markdown[] = "## {$relativePath}";
-        $markdown[] = '';
-        $markdown[] = '_Datei konnte nicht gelesen werden._';
-        $markdown[] = '';
+        $section[] = '';
+        $section[] = '_Datei konnte nicht gelesen werden._';
+        $section[] = '';
+        writeLines($handle, $section);
         continue;
     }
 
     $normalizedContent = str_replace(["\r\n", "\r"], "\n", $content);
+    unset($content);
 
     $description = buildDescription($relativePath, $normalizedContent);
     $language = languageHint($filePath);
 
-    $markdown[] = "## {$relativePath}";
     if ($description !== '') {
-        $markdown[] = "- Kurzbeschreibung: {$description}";
-        $markdown[] = '';
+        $section[] = "- Kurzbeschreibung: {$description}";
+        $section[] = '';
     }
 
-    $markdown[] = "```{$language}";
-    $markdown[] = $normalizedContent;
-    $markdown[] = '```';
-    $markdown[] = '';
+    $section[] = "```{$language}";
+    writeLines($handle, $section);
+
+    fwrite($handle, $normalizedContent . "\n");
+
+    $sectionEnd = ['```', ''];
+    writeLines($handle, $sectionEnd);
+    unset($normalizedContent);
 }
 
-$written = file_put_contents($outputFile, implode("\n", $markdown));
-
-if ($written === false) {
-    fwrite(STDERR, "Konnte Ausgabedatei nicht schreiben: {$outputFile}\n");
-    exit(1);
-}
+fclose($handle);
 
 echo "Dump erstellt: {$outputFile}\n";
 
@@ -141,4 +152,9 @@ function languageHint(string $filePath): string
         'yml', 'yaml' => 'yaml',
         default => 'text',
     };
+}
+
+function writeLines($handle, array $lines): void
+{
+    fwrite($handle, implode("\n", $lines) . "\n");
 }
