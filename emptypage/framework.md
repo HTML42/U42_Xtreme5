@@ -1,0 +1,128 @@
+# Xtreme Webframework 5 - AI Quick Reference
+
+Purpose: concise, high-signal notes for building/maintaining features in this repo.
+
+## 1) Routing (hash-based)
+- Routes are implicit: if a controller + view exists, it is a route.
+- URL format: `#!controller/view`
+  - `#!index/index`
+  - `#!games/tetris`
+- `RouterClass` parses the hash and `App.render()` executes the view.
+
+## 2) Controllers
+- Location: `js/controller/*.controller.js`
+- Class name pattern: `<Name>Controller extends ControllerClass`.
+- Views are `view_<name>()` methods.
+
+**Example**
+```js
+class TestController extends ControllerClass {
+    constructor() { super(); }
+
+    view_index() {
+        let Page = new PageClass();
+        Page.title = (new TranslationClass('titles.test.index')).result;
+        Page.Template = new TemplateClass('view.test.index');
+        return Page;
+    }
+}
+```
+
+## 3) Templates (XTPL)
+- Location: `templates/*.xtpl`
+- Naming: `view.<controller>.<view>.xtpl`
+- Syntax is Emmet-like. **Do not place raw text nodes**; use `translate:` keys or `data-*` placeholders.
+- **No blank lines anywhere** in `.xtpl` files, including between nodes and at the end of the file (blank lines create null elements).
+- **Each attribute must live in its own bracket**; do not combine multiple attributes inside one `[]`.
+
+**Examples**
+```
+div.test
+```
+→ `<div class="test"></div>`
+
+```
+div.wrap
+  h2
+  p
+```
+→ `<div class="wrap"><h2></h2><p></p></div>`
+
+```
+div.test[data-href="test/index"]
+  h1
+    translate:pagecaptions.test_index
+  ul#mylist
+    li
+      input[type="text"][name="player_name"][required]
+```
+
+## 4) Translations
+- Location: `translations/<lang>/l18n.json` (and optional HTML files).
+- Access:
+  - Templates: `translate:some.key`
+  - JS: `(new TranslationClass('some.key')).result`
+- Keys are hierarchical (e.g. `words.withdraw`).
+- **Static error keys only**: avoid dynamic `sprintf` or building keys from variables.
+
+**Example JSON**
+```json
+{
+  "titles": { "index": { "example": "Example Page" } },
+  "words": { "withdraw": "Auszahlung" }
+}
+```
+
+## 5) Links & Navigation
+- Use `RouterClass.redirect('controller/view')` for navigation.
+- Or set `data-href="controller/view"` on elements and call `transform_datahref()`.
+
+**Example**
+```js
+RouterClass.redirect('index/imprint');
+```
+```js
+let dom = document.createElement('div');
+dom.setAttribute('data-href', 'index/imprint');
+transform_datahref(dom);
+```
+
+## 6) Objects (API endpoints)
+- Location: `php/objects/**/*.php`
+- Access path: `BASEURL + 'object/path'`
+- Full framework context is loaded (sessions + helpers).
+- Responses:
+  - JSON: `Response::ajax($data, $status, $errors)`
+  - Binary: set `App::$mime` + `Response::deliver($content)`
+- Error handling:
+  - Always call `Response::ajax(...)` once at the end of the request.
+  - For error responses, set `$data` to `null` (or an empty array) and pass a non-200 status (e.g. `400`, `404`, `409`).
+  - `$errors` must be an array of translation keys (e.g. `errors.users.not_found`), so the frontend can translate via `_()`.
+
+## 7) Cache class (server-side)
+- Use `Cache::get($key, $ttl)` to read a cached value.
+- Use `Cache::set($key, $value)` to write.
+- Pattern example (see `php/objects/user/account_get.php`):
+```php
+$cache_ttl = 2;
+$cache_key = "user_account_get_{$user_id}";
+$cached = Cache::get($cache_key, $cache_ttl);
+if (is_array($cached)) {
+    $response = $cached;
+} else {
+    $response = [ /* data */ ];
+    Cache::set($cache_key, $response);
+}
+```
+
+## 8) Common classes
+- `PageClass`: page metadata (title, template).
+- `TemplateClass`: loads and renders `.xtpl` templates.
+- `TranslationClass`: resolves translation keys.
+- `RouterClass`: parses hash routes and redirects.
+
+## 9) Style reminders
+- Keep templates free of plain text nodes: prefer `translate:` keys.
+- Add translation keys before using them in templates or JS.
+- Use `data-*` placeholders for runtime values.
+- CSS/Less variables from config use size suffixes: `_tiny`, `_small`, `_normal`, `_big`, `_huge` (avoid `_large`).

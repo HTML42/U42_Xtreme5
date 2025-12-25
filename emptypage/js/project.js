@@ -1,61 +1,45 @@
 setTimeout(function() {
     setInterval(check_login_logout, 500);
     //
-    document.querySelectorAll('[data-scroll]').forEach(function(element) {
-        element.addEventListener('click', function(event) {
-            event.preventDefault();
-            scroll_to(element.getAttribute('data-scroll'));
-            if(element.getAttribute('href').substring(0, 2) == '#!') {
-                location.hash = element.getAttribute('href').substring(1);
-            }
+    //Enable this scroll section if its a onepager
+    if(false) {
+        document.querySelectorAll('[data-scroll]').forEach(function(element) {
+            element.addEventListener('click', function(event) {
+                event.preventDefault();
+                scroll_to(element.getAttribute('data-scroll'));
+                if(element.getAttribute('href').substring(0, 2) == '#!') {
+                    location.hash = element.getAttribute('href').substring(1);
+                }
+            });
         });
-    });
-    //
-    window.addEventListener('scroll', () => {
-        let target_ids = [];
-        document.querySelectorAll('[data-scroll]').forEach(nav_item => {
-            let target_id = nav_item.getAttribute('data-scroll'),
-                target_element = document.getElementById(target_id),
-                target_top = target_element ? target_element.getBoundingClientRect().top + window.scrollY : null;
-            
-            if (target_top !== null) {
-                target_ids.push({ id: target_id, top: target_top });
-            }
-        });
-        target_ids.sort((a, b) => a.top - b.top);
-        let scroll_position = window.scrollY + 100;
-        //
-        if(scroll_position <= 350) {
-            location.hash = '!index/index/intro';
-            document.querySelectorAll('.menu_main li').forEach(item => item.classList.remove('menu_item--current'));
-            return;
-        }
-        let vr_section = document.getElementById('vr');
-        if (vr_section) {
-            let vr_top = vr_section.getBoundingClientRect().top + window.scrollY;
-            if (scroll_position >= vr_top) {
-                document.querySelectorAll('.menu_main li').forEach(item => item.classList.remove('menu_item--current'));
-                location.hash = '!index/index';
-                return;
-            }
-        }
-        //
-        for (let i = 0; i < target_ids.length; i++) {
-            if (scroll_position >= target_ids[i].top && (!target_ids[i + 1] || scroll_position < target_ids[i + 1].top)) {
-                let li = document.querySelector(`[data-scroll="${target_ids[i].id}"]`).parentElement;
-                if (!li.classList.contains('menu_item--current')) {
-                    document.querySelectorAll('.menu_main li').forEach(item => item.classList.remove('menu_item--current'));
-                    li.classList.add('menu_item--current');
-                    location.hash = li.querySelector('a').getAttribute('href').substring(1);
-                    break;
+        window.addEventListener('scroll', () => {
+            let target_ids = [];
+            document.querySelectorAll('[data-scroll]').forEach(nav_item => {
+                let target_id = nav_item.getAttribute('data-scroll'),
+                    target_element = document.getElementById(target_id),
+                    target_top = target_element ? target_element.getBoundingClientRect().top + window.scrollY : null;
+                
+                if (target_top !== null) {
+                    target_ids.push({ id: target_id, top: target_top });
+                }
+            });
+            target_ids.sort((a, b) => a.top - b.top);
+            let scroll_position = window.scrollY + 100;
+            //
+            for (let i = 0; i < target_ids.length; i++) {
+                if (scroll_position >= target_ids[i].top && (!target_ids[i + 1] || scroll_position < target_ids[i + 1].top)) {
+                    let li = document.querySelector(`[data-scroll="${target_ids[i].id}"]`).parentElement;
+                    if (!li.classList.contains('menu_item--current')) {
+                        document.querySelectorAll('.menu_main li').forEach(item => item.classList.remove('menu_item--current'));
+                        li.classList.add('menu_item--current');
+                        location.hash = li.querySelector('a').getAttribute('href').substring(1);
+                        break;
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 }, 10);
-setTimeout(function() {
-    document.querySelector('#intro').classList.add('hd');
-}, 500);
 
 setTimeout(check_login_logout, 1);
 
