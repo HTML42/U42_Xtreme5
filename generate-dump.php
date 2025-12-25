@@ -17,7 +17,7 @@ $iterator = new RecursiveIteratorIterator(
 );
 
 foreach ($iterator as $fileInfo) {
-    if ($fileInfo->isFile()) {
+    if ($fileInfo->isFile() && shouldDumpFile($fileInfo)) {
         $files[] = $fileInfo->getPathname();
     }
 }
@@ -77,6 +77,20 @@ foreach ($files as $filePath) {
 fclose($handle);
 
 echo "Dump erstellt: {$outputFile}\n";
+
+$targetDump = __DIR__ . '/emptypage/framework-dump.md';
+
+if (!is_dir(dirname($targetDump))) {
+    fwrite(STDERR, "Zielverzeichnis für Dump existiert nicht: " . dirname($targetDump) . "\n");
+    exit(1);
+}
+
+if (!copy($outputFile, $targetDump)) {
+    fwrite(STDERR, "Konnte Dump nicht nach {$targetDump} kopieren.\n");
+    exit(1);
+}
+
+echo "Dump kopiert nach {$targetDump}\n";
 
 function buildDescription(string $relativePath, string $content): string
 {
@@ -157,4 +171,18 @@ function languageHint(string $filePath): string
 function writeLines($handle, array $lines): void
 {
     fwrite($handle, implode("\n", $lines) . "\n");
+}
+
+function shouldDumpFile(SplFileInfo $fileInfo): bool
+{
+    $basename = $fileInfo->getBasename();
+
+    if (strcasecmp($basename, '.DS_Store') === 0) {
+        return false;
+    }
+
+    $extension = strtolower(pathinfo($basename, PATHINFO_EXTENSION));
+    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg', 'ico', 'tiff', 'heic', 'avif'];
+
+    return !in_array($extension, $imageExtensions, true);
 }
