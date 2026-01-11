@@ -171,3 +171,13 @@ Example:
     document.body.appendChild(Template_dom);
 ```
 By using these methods, seamless navigation between pages of a website can be ensured, leading to an enhanced user experience.
+
+## Database Tables (Naming)
+
+- **Normale Tabellen** sind **ein Wort** und **immer plural**.
+  - Wenn zwei Wörter nötig sind, werden sie **zusammengeschrieben** (ohne `_`).
+- **Zuweisungstabellen** verwenden **zwei Wörter mit `_`**.
+  - Standard: `plural_plural` für n:m-Beziehungen (z. B. `users_groups`).
+  - Ausnahmefälle: eine Seite kann **singular** sein, wenn die Relation bewusst gerichtet ist.
+- Tabellen oder Metadateien werden **nicht** manuell angelegt; gepflegt wird **nur** die Konfiguration in `db.phb`.
+- Formulare werden über die **Konfiguration** erstellt, damit Validierung und Metadaten zentral definiert sind und im JavaScript verfügbar bleiben.
