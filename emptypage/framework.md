@@ -115,13 +115,22 @@ if (is_array($cached)) {
 }
 ```
 
-## 8) Common classes
+## 8) Datenbanktabellen (Naming)
+- Normale Tabellen sind **ein Wort** und **immer plural**.
+  - Wenn zwei Wörter nötig sind, werden sie **zusammengeschrieben** (ohne `_`).
+- Zuweisungstabellen verwenden **zwei Wörter mit `_`**.
+  - Standard: `plural_plural` für n:m-Beziehungen (z. B. `users_groups`).
+  - Ausnahmefälle: eine Seite kann **singular** sein, wenn die Relation bewusst gerichtet ist.
+- Tabellen oder Metadateien werden **nicht** manuell angelegt; gepflegt wird **nur** die Konfiguration in `db.phb`.
+- Formulare werden über die **Konfiguration** erstellt, damit Validierung und Metadaten zentral definiert sind und im JavaScript verfügbar bleiben.
+
+## 9) Common classes
 - `PageClass`: page metadata (title, template).
 - `TemplateClass`: loads and renders `.xtpl` templates.
 - `TranslationClass`: resolves translation keys.
 - `RouterClass`: parses hash routes and redirects.
 
-## 9) Style reminders
+## 10) Style reminders
 - Keep templates free of plain text nodes: prefer `translate:` keys.
 - Add translation keys before using them in templates or JS.
 - Use `data-*` placeholders for runtime values.

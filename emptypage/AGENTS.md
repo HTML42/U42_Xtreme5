@@ -16,6 +16,9 @@ This guide orients AI assistants that start new projects from the Empty Page tem
 - **Objects / API endpoints:** PHP objects under `php/objects/**/*.php` respond via `Response::ajax($data, $status, $errors)`. Leave `$data` empty on errors and return error keys instead.
 - **Caching (server):** Read with `Cache::get($key, $ttl)`, write with `Cache::set($key, $value)`. See examples such as `php/objects/user/account_get.php` in the framework dump.
 - **Styles:** Use CSS/LESS variables `_tiny`, `_small`, `_normal`, `_big`, `_huge` (not `_large`). Prefer existing mixins (`.h()`, `.xbutton`, `.xform`, etc.) for components.
+- **Datenbanktabellen (Naming):** Normale Tabellen sind **ein Wort** und **immer plural** (zwei Wörter werden zusammengeschrieben ohne `_`). Zuweisungstabellen nutzen **zwei Wörter mit `_`**: meist `plural_plural` für n:m-Beziehungen; in Sonderfällen kann eine Seite **singular** sein, um die Richtung/Art der Relation zu zeigen.
+- **Datenbankstruktur:** Wir legen **keine** Tabellen- oder Metadateien manuell an. Es wird **nur** die Konfiguration in `db.phb` gepflegt.
+- **Formulare:** Formulare sollen über die **Konfiguration** erstellt werden, damit Validierung und Metadaten zentral definiert sind und später im JavaScript verfügbar sind.
 
 ## Tips for AI-driven changes
 - Create translation keys before referencing them in templates/JS.
