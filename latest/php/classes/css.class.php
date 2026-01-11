@@ -46,7 +46,7 @@ class Css
                     }
                 }
                 file_put_contents($lib_filepath, $file_content);
-                sleep(0.1);
+                usleep(100000);
             }
             include $lib_filepath;
         }
