@@ -19,8 +19,11 @@ class RouterClass {
                 }
             }
         }
-        if(typeof route_path[2] !== 'undefined' && route_path[2] !== null) {
-            window.last_route_id = route_path[2];
+        for(let i = 0 ; i < route_path.length ; i++) {
+            if(typeof route_path[i] === 'number' && !Number.isNaN(route_path[i])) {
+                window.last_route_id = route_path[i];
+                break;
+            }
         }
         return route_path;
     }
