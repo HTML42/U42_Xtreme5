@@ -1,0 +1,99 @@
+.xtabs {
+    display: flex;
+    gap: @distance_small;
+}
+.xtabs_tabs,
+.xtabs_contents {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.xtabs_tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+.xtabs_tabs > li {
+    margin: 0;
+}
+.xtabs_trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: @distance_tiny @distance_small;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 0;
+    background: #f7f7f7;
+    color: @color_grey_dark;
+    font-weight: 500;
+}
+.xtabs_tabs > li + li .xtabs_trigger {
+    border-left: 0;
+}
+.xtabs_trigger span {
+    margin-left: @distance_tiny;
+    font-weight: bold;
+}
+.xtabs_tabs > li.is-active .xtabs_trigger {
+    background: @color_main_normal;
+    color: #fff;
+}
+.xtabs_contents {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #fff;
+    border-radius: 0 @distance_tiny @distance_tiny @distance_tiny;
+    width: 100%;
+}
+.xtabs_content {
+    padding: @distance_small;
+}
+.xtabs_content:not(.is-active) {
+    display: none;
+}
+.xtabs[data-xtabs-mode='horizontal-top'],
+.xtabs[data-xtabs-mode='horizontal-bottom'] {
+    flex-direction: column;
+}
+.xtabs[data-xtabs-mode='horizontal-bottom'] .xtabs_tabs {
+    order: 2;
+}
+.xtabs[data-xtabs-mode='horizontal-bottom'] .xtabs_contents {
+    order: 1;
+    border-radius: @distance_tiny @distance_tiny 0 @distance_tiny;
+}
+.xtabs[data-xtabs-mode='horizontal-bottom'] .xtabs_trigger {
+    border-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.xtabs[data-xtabs-mode='vertical-left'],
+.xtabs[data-xtabs-mode='vertical-right'] {
+    align-items: stretch;
+}
+.xtabs[data-xtabs-mode='vertical-left'] .xtabs_tabs,
+.xtabs[data-xtabs-mode='vertical-right'] .xtabs_tabs {
+    flex-direction: column;
+    min-width: 220px;
+}
+.xtabs[data-xtabs-mode='vertical-left'] .xtabs_trigger,
+.xtabs[data-xtabs-mode='vertical-right'] .xtabs_trigger {
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.xtabs[data-xtabs-mode='vertical-left'] .xtabs_tabs > li + li .xtabs_trigger,
+.xtabs[data-xtabs-mode='vertical-right'] .xtabs_tabs > li + li .xtabs_trigger {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 0;
+}
+.xtabs[data-xtabs-mode='vertical-left'] .xtabs_contents,
+.xtabs[data-xtabs-mode='vertical-right'] .xtabs_contents {
+    border-radius: @distance_tiny;
+}
+.xtabs[data-xtabs-mode='vertical-right'] .xtabs_tabs {
+    order: 2;
+}
+.xtabs[data-xtabs-mode='vertical-right'] .xtabs_contents {
+    order: 1;
+}

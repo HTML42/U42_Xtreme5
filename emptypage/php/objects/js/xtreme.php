@@ -15,6 +15,7 @@ $files = array(
     File::i('js/classes/xpopup.class.js')->path,
     File::i('js/classes/xuser.class.js')->path,
     File::i('js/classes/xscroll.class.js')->path,
+    File::i('js/classes/xtabs.class.js')->path,
     File::i('js/functions.js')->path,
     File::i('js/project.js')->path,
 );

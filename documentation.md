@@ -181,3 +181,27 @@ By using these methods, seamless navigation between pages of a website can be en
   - Ausnahmefälle: eine Seite kann **singular** sein, wenn die Relation bewusst gerichtet ist.
 - Tabellen oder Metadateien werden **nicht** manuell angelegt; gepflegt wird **nur** die Konfiguration in `db.phb`.
 - Formulare werden über die **Konfiguration** erstellt, damit Validierung und Metadaten zentral definiert sind und im JavaScript verfügbar bleiben.
+
+
+## xTabs (neu)
+Im Projekt ist jetzt eine wiederverwendbare xTabs-Komponente integriert.
+
+- **Styles:** `latest/css/xtreme/xtabs.less`
+- **Logik:** `latest/js/classes/xtabs.class.js`
+- **Framework-Registrierung:** `latest/php/objects/css/xtreme.php` und `latest/php/objects/js/xtreme.php`
+- **Projekt-Einbindung (Empty Page):** `emptypage/php/objects/css/xtreme.php` und `emptypage/php/objects/js/xtreme.php`
+
+### Verwendung in XTPL
+```
+div[data-xtabs="horizontal-top"]
+  ul.xtabs_tabs
+    li[data-xtabs-ref="deposits"]
+      div
+        translate:words.admin_deposits
+  ul.xtabs_contents
+    li[data-xtabs-ref="deposits"]
+      h2
+        translate:words.admin_deposits
+```
+
+Unterstützte Layout-Modi: `horizontal-top`, `horizontal-bottom`, `vertical-left`, `vertical-right`.
