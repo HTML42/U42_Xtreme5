@@ -186,9 +186,10 @@ By using these methods, seamless navigation between pages of a website can be en
 ## xTabs (neu)
 Im Projekt ist jetzt eine wiederverwendbare xTabs-Komponente integriert.
 
-- **Styles:** `emptypage/css/xtabs.less`
-- **Logik:** `emptypage/js/xtabs.class.js`
-- **Registrierung:** `emptypage/php/objects/css/xtreme.php` und `emptypage/php/objects/js/xtreme.php`
+- **Styles:** `latest/css/xtreme/xtabs.less`
+- **Logik:** `latest/js/classes/xtabs.class.js`
+- **Framework-Registrierung:** `latest/php/objects/css/xtreme.php` und `latest/php/objects/js/xtreme.php`
+- **Projekt-Einbindung (Empty Page):** `emptypage/php/objects/css/xtreme.php` und `emptypage/php/objects/js/xtreme.php`
 
 ### Verwendung in XTPL
 ```

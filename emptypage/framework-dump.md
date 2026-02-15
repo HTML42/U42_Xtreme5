@@ -1,7 +1,7 @@
 # Latest framework dump
 Erzeugt am 2025-12-25T01:08:57+00:00
 
-## project/css/xtabs.less
+## latest/css/xtreme/xtabs.less
 - Kurzbeschreibung: xTabs-Komponente (horizontal/vertikal)
 
 ```text
@@ -12,7 +12,7 @@ Erzeugt am 2025-12-25T01:08:57+00:00
 ...
 ```
 
-## project/js/xtabs.class.js
+## latest/js/classes/xtabs.class.js
 - Kurzbeschreibung: Initialisiert `[data-xtabs]`, erzeugt Refs, Accessibility und Hash-Sync (`tab--<ref>`).
 
 ```text

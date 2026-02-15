@@ -9,7 +9,7 @@ $files = array(
     File::i('css/xtreme/xform.less')->path,
     File::i('css/xtreme/xpopup.less')->path,
     File::i('css/xtreme/xgeo.less')->path,
-    File::i('css/xtabs.less')->path,
+    File::i('css/xtreme/xtabs.less')->path,
     File::i('css/pages.less')->path,
     File::i('css/forms.less')->path,
     File::i('css/fonts.less')->path,

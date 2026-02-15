@@ -10,6 +10,7 @@ $files = array(
     File::i('js/classes/translation.class.js')->path,
     File::i('js/classes/form.class.js')->path,
     File::i('js/classes/xscroll.class.js')->path,
+    File::i('js/classes/xtabs.class.js')->path,
     File::i('js/functions.js')->path,
 );
 $files = array_merge($files, glob(DIR_PROJECT . 'js/controller/*.controller.js'));
