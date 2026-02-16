@@ -85,15 +85,11 @@ class Email
                 'to' => $recipients,
                 'subject' => $subject,
                 'headers' => $headers,
-                'body' => $mime['body'],
+                'body_plain' => $plainTextMessage,
+                'body_html' => (string)$message,
                 'meta' => [
                     'is_html' => $isHtml,
-                    'attachments' => array_values(array_map(function ($attachment) {
-                        return [
-                            'name' => isset($attachment['name']) ? $attachment['name'] : basename((string)$attachment),
-                            'path' => isset($attachment['path']) ? $attachment['path'] : (is_string($attachment) ? $attachment : ''),
-                        ];
-                    }, $attachments)),
+                    'attachments' => $this->collectAttachmentMeta($attachments),
                 ],
             ]);
 
@@ -352,12 +348,57 @@ class Email
         $filename = $timestamp . '_' . $unique . '.txt';
         $filepath = $directory . $filename;
 
+        $headersByName = [];
+        foreach ($payload['headers'] as $header) {
+            $parts = explode(':', (string)$header, 2);
+            if (count($parts) === 2) {
+                $headersByName[strtolower(trim($parts[0]))] = trim($parts[1]);
+            }
+        }
+
+        $bodyPlain = trim((string)$payload['body_plain']);
+        $bodyHtml = trim((string)$payload['body_html']);
+
         $content = 'TO: ' . implode(', ', $payload['to']) . $this->lineBreak;
         $content .= 'SUBJECT: ' . $payload['subject'] . $this->lineBreak;
         $content .= 'DATE: ' . date('c') . $this->lineBreak;
-        $content .= 'HEADERS:' . $this->lineBreak . implode($this->lineBreak, $payload['headers']) . $this->lineBreak . $this->lineBreak;
-        $content .= 'META:' . $this->lineBreak . json_encode($payload['meta'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . $this->lineBreak . $this->lineBreak;
-        $content .= 'BODY:' . $this->lineBreak . $payload['body'] . $this->lineBreak;
+        $content .= 'TYPE: ' . (!empty($payload['meta']['is_html']) ? 'HTML' : 'TEXT') . $this->lineBreak;
+
+        if (isset($headersByName['from'])) {
+            $content .= 'FROM: ' . $headersByName['from'] . $this->lineBreak;
+        }
+        if (isset($headersByName['reply-to'])) {
+            $content .= 'REPLY-TO: ' . $headersByName['reply-to'] . $this->lineBreak;
+        }
+        if (isset($headersByName['cc'])) {
+            $content .= 'CC: ' . $headersByName['cc'] . $this->lineBreak;
+        }
+        if (isset($headersByName['bcc'])) {
+            $content .= 'BCC: ' . $headersByName['bcc'] . $this->lineBreak;
+        }
+
+        $content .= $this->lineBreak;
+        $content .= 'ATTACHMENTS:' . $this->lineBreak;
+        $attachments = isset($payload['meta']['attachments']) && is_array($payload['meta']['attachments']) ? $payload['meta']['attachments'] : [];
+        if (empty($attachments)) {
+            $content .= '- none' . $this->lineBreak;
+        } else {
+            foreach ($attachments as $attachment) {
+                $size = isset($attachment['size']) && $attachment['size'] !== null ? (string)$attachment['size'] . ' bytes' : 'unknown size';
+                $mime = isset($attachment['mime']) && $attachment['mime'] !== '' ? $attachment['mime'] : 'application/octet-stream';
+                $source = isset($attachment['source']) && $attachment['source'] !== '' ? $attachment['source'] : 'inline';
+                $content .= '- ' . $attachment['name'] . ' | ' . $size . ' | ' . $mime . ' | source: ' . $source . $this->lineBreak;
+            }
+        }
+
+        $content .= $this->lineBreak;
+        $content .= 'BODY_TEXT:' . $this->lineBreak;
+        $content .= ($bodyPlain !== '' ? $bodyPlain : '[empty]') . $this->lineBreak . $this->lineBreak;
+
+        if (!empty($payload['meta']['is_html'])) {
+            $content .= 'BODY_HTML:' . $this->lineBreak;
+            $content .= ($bodyHtml !== '' ? $bodyHtml : '[empty]') . $this->lineBreak;
+        }
 
         file_put_contents($filepath, $content);
 
@@ -371,5 +412,55 @@ class Email
         }
 
         return dirname(__DIR__, 2) . DIRECTORY_SEPARATOR;
+    }
+
+    protected function collectAttachmentMeta($attachments)
+    {
+        $meta = [];
+
+        foreach ($attachments as $attachment) {
+            $path = '';
+            $name = 'attachment.bin';
+            $mime = 'application/octet-stream';
+            $size = null;
+
+            if (is_string($attachment)) {
+                $path = $attachment;
+                $name = basename($attachment);
+            } elseif (is_array($attachment)) {
+                $path = isset($attachment['path']) ? (string)$attachment['path'] : '';
+                $name = isset($attachment['name']) && $attachment['name'] !== ''
+                    ? (string)$attachment['name']
+                    : ($path !== '' ? basename($path) : $name);
+                $mime = isset($attachment['mime']) && $attachment['mime'] !== '' ? (string)$attachment['mime'] : $mime;
+
+                if (isset($attachment['content'])) {
+                    $size = strlen((string)$attachment['content']);
+                }
+            }
+
+            if ($path !== '' && is_file($path)) {
+                $fileSize = filesize($path);
+                if ($fileSize !== false) {
+                    $size = (int)$fileSize;
+                }
+
+                if (function_exists('mime_content_type')) {
+                    $detectedMime = mime_content_type($path);
+                    if (is_string($detectedMime) && $detectedMime !== '') {
+                        $mime = $detectedMime;
+                    }
+                }
+            }
+
+            $meta[] = [
+                'name' => $name,
+                'mime' => $mime,
+                'size' => $size,
+                'source' => $path,
+            ];
+        }
+
+        return array_values($meta);
     }
 }
