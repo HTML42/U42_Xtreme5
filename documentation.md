@@ -183,6 +183,42 @@ By using these methods, seamless navigation between pages of a website can be en
 - Formulare werden über die **Konfiguration** erstellt, damit Validierung und Metadaten zentral definiert sind und im JavaScript verfügbar bleiben.
 
 
+
+## Email class (neu)
+- Klasse: `latest/php/classes/email.class.php`
+- Native PHP-Mail-Abstraktion mit UTF-8 Header-Encoding und MIME-Support.
+- Features:
+  - HTML + Plaintext (multipart/alternative)
+  - Attachments (Dateipfad oder Inline-Content)
+  - `from`, `reply_to`, `cc`, `bcc`, Custom-Header
+  - Bulk-Versand via `sendBulk()` mit wachsendem Delay zwischen Mails
+- Localhost-Simulation:
+  - Aktiv über Constructor-Option `simulate_local_emails` (default: `true`)
+  - Erkennt `localhost`, `127.0.0.1`, `::1`
+  - Schreibt statt realem Versand eine `.txt` in `<PROJECT_ROOT>/_emails/` (konfigurierbar über `simulated_emails_directory`)
+
+**Beispiel**
+```php
+$Email = new Email([
+    'simulate_local_emails' => true,
+    'default_from_email' => 'noreply@example.org',
+    'default_from_name' => 'My App',
+]);
+
+$result = $Email->send(
+    ['kunde@example.org'],
+    'Willkommen',
+    '<h1>Hallo 👋</h1><p>Danke für deine Registrierung.</p>',
+    [
+        'is_html' => true,
+        'attachments' => [
+            ['path' => DIR_PROJECT . 'dist/files/info.pdf', 'name' => 'info.pdf'],
+        ],
+    ]
+);
+```
+
+
 ## xTabs (neu)
 Im Projekt ist jetzt eine wiederverwendbare xTabs-Komponente integriert.
 

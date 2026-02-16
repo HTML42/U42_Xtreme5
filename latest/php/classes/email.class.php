@@ -19,7 +19,7 @@ class Email
     public function send($to, $subject, $message, $options = [])
     {
         $recipients = $this->normalizeRecipients($to);
-        if(empty($recipients)) {
+        if (empty($recipients)) {
             return [
                 'status' => false,
                 'error' => 'No valid recipients provided.',
@@ -27,7 +27,7 @@ class Email
         }
 
         $subject = trim((string)$subject);
-        if($subject === '') {
+        if ($subject === '') {
             return [
                 'status' => false,
                 'error' => 'Subject cannot be empty.',
@@ -55,32 +55,32 @@ class Email
             'Content-Type: ' . $mime['content_type'],
         ];
 
-        if($fromEmail !== '' && filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
+        if ($fromEmail !== '' && filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
             $headers[] = 'From: ' . $this->formatAddress($fromEmail, $fromName);
         }
 
-        if($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+        if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
             $headers[] = 'Reply-To: ' . $this->formatAddress($replyTo);
         }
 
-        if(!empty($cc)) {
+        if (!empty($cc)) {
             $headers[] = 'Cc: ' . implode(', ', $cc);
         }
 
-        if(!empty($bcc)) {
+        if (!empty($bcc)) {
             $headers[] = 'Bcc: ' . implode(', ', $bcc);
         }
 
-        foreach($customHeaders as $header) {
+        foreach ($customHeaders as $header) {
             $header = trim((string)$header);
-            if($header !== '') {
+            if ($header !== '') {
                 $headers[] = $header;
             }
         }
 
         $encodedSubject = $this->encodeHeader($subject);
 
-        if($this->shouldSimulateDelivery()) {
+        if ($this->shouldSimulateDelivery()) {
             $filepath = $this->writeSimulatedEmail([
                 'to' => $recipients,
                 'subject' => $subject,
@@ -88,7 +88,7 @@ class Email
                 'body' => $mime['body'],
                 'meta' => [
                     'is_html' => $isHtml,
-                    'attachments' => array_values(array_map(function($attachment) {
+                    'attachments' => array_values(array_map(function ($attachment) {
                         return [
                             'name' => isset($attachment['name']) ? $attachment['name'] : basename((string)$attachment),
                             'path' => isset($attachment['path']) ? $attachment['path'] : (is_string($attachment) ? $attachment : ''),
@@ -126,8 +126,8 @@ class Email
         $delayGrowthFactor = max(1, (float)$delayGrowthFactor);
         $maxDelayMs = max(0, (int)$maxDelayMs);
 
-        foreach($mails as $index => $mailData) {
-            if($delayMs > 0 && $index > 0) {
+        foreach ($mails as $index => $mailData) {
+            if ($delayMs > 0 && $index > 0) {
                 usleep($delayMs * 1000);
                 $delayMs = min($maxDelayMs, (int)round($delayMs * $delayGrowthFactor));
             }
@@ -141,14 +141,14 @@ class Email
         }
 
         return [
-            'status' => !in_array(false, array_map(function($result) {
+            'status' => !in_array(false, array_map(function ($result) {
                 return (bool)$result['status'];
             }, $results), true),
             'total' => count($results),
-            'successful' => count(array_filter($results, function($result) {
+            'successful' => count(array_filter($results, function ($result) {
                 return !empty($result['status']);
             })),
-            'failed' => count(array_filter($results, function($result) {
+            'failed' => count(array_filter($results, function ($result) {
                 return empty($result['status']);
             })),
             'results' => $results,
@@ -161,7 +161,7 @@ class Email
         $boundaryMixed = 'mixed_' . md5(uniqid((string)mt_rand(), true));
         $boundaryAlternative = 'alt_' . md5(uniqid((string)mt_rand(), true));
 
-        if(!$isHtml && !$hasAttachments) {
+        if (!$isHtml && !$hasAttachments) {
             return [
                 'content_type' => 'text/plain; charset=UTF-8',
                 'body' => $plainTextMessage,
@@ -172,7 +172,7 @@ class Email
         $textPart = $this->buildTextPart($plainTextMessage, 'plain');
         $htmlPart = $this->buildTextPart((string)$htmlMessage, 'html');
 
-        if($isHtml) {
+        if ($isHtml) {
             $alternativeBody = '--' . $boundaryAlternative . $this->lineBreak;
             $alternativeBody .= $textPart . $this->lineBreak;
             $alternativeBody .= '--' . $boundaryAlternative . $this->lineBreak;
@@ -184,15 +184,15 @@ class Email
             $parts[] = $textPart;
         }
 
-        foreach($attachments as $attachment) {
+        foreach ($attachments as $attachment) {
             $attachmentData = $this->prepareAttachment($attachment);
-            if($attachmentData !== null) {
+            if ($attachmentData !== null) {
                 $parts[] = $attachmentData;
             }
         }
 
-        if(!$hasAttachments) {
-            if($isHtml) {
+        if (!$hasAttachments) {
+            if ($isHtml) {
                 return [
                     'content_type' => 'multipart/alternative; boundary="' . $boundaryAlternative . '"',
                     'body' => $alternativeBody,
@@ -206,7 +206,7 @@ class Email
         }
 
         $body = '';
-        foreach($parts as $part) {
+        foreach ($parts as $part) {
             $body .= '--' . $boundaryMixed . $this->lineBreak;
             $body .= $part . $this->lineBreak;
         }
@@ -232,29 +232,29 @@ class Email
         $mime = 'application/octet-stream';
         $content = null;
 
-        if(is_string($attachment)) {
+        if (is_string($attachment)) {
             $path = $attachment;
             $name = basename($attachment);
-        } elseif(is_array($attachment)) {
+        } elseif (is_array($attachment)) {
             $path = isset($attachment['path']) ? (string)$attachment['path'] : '';
             $name = isset($attachment['name']) ? (string)$attachment['name'] : ($path !== '' ? basename($path) : 'attachment.bin');
             $mime = isset($attachment['mime']) ? (string)$attachment['mime'] : $mime;
-            if(isset($attachment['content'])) {
+            if (isset($attachment['content'])) {
                 $content = (string)$attachment['content'];
             }
         }
 
-        if($content === null) {
-            if($path === '' || !is_file($path) || !is_readable($path)) {
+        if ($content === null) {
+            if ($path === '' || !is_file($path) || !is_readable($path)) {
                 return null;
             }
             $content = file_get_contents($path);
-            if($content === false) {
+            if ($content === false) {
                 return null;
             }
-            if(function_exists('mime_content_type')) {
+            if (function_exists('mime_content_type')) {
                 $detected = mime_content_type($path);
-                if(is_string($detected) && $detected !== '') {
+                if (is_string($detected) && $detected !== '') {
                     $mime = $detected;
                 }
             }
@@ -268,26 +268,27 @@ class Email
 
     protected function formatAddress($email, $name = '')
     {
-        if($name === '') {
+        if ($name === '') {
             return $email;
         }
+
         return $this->encodeHeader($name) . ' <' . $email . '>';
     }
 
     protected function normalizeRecipients($input)
     {
-        if(is_string($input)) {
+        if (is_string($input)) {
             $input = preg_split('/[,;]+/', $input);
         }
 
-        if(!is_array($input)) {
+        if (!is_array($input)) {
             return [];
         }
 
         $output = [];
-        foreach($input as $item) {
+        foreach ($input as $item) {
             $email = trim((string)$item);
-            if($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $output[] = $email;
             }
         }
@@ -298,11 +299,11 @@ class Email
     protected function encodeHeader($value)
     {
         $value = (string)$value;
-        if($value === '') {
+        if ($value === '') {
             return '';
         }
 
-        if(function_exists('mb_encode_mimeheader')) {
+        if (function_exists('mb_encode_mimeheader')) {
             return mb_encode_mimeheader($value, 'UTF-8', 'B', $this->lineBreak);
         }
 
@@ -317,7 +318,7 @@ class Email
 
     protected function shouldSimulateDelivery()
     {
-        if(!$this->simulateLocalEmails) {
+        if (!$this->simulateLocalEmails) {
             return false;
         }
 
@@ -328,10 +329,10 @@ class Email
             isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
         ];
 
-        foreach($hosts as $host) {
+        foreach ($hosts as $host) {
             $host = strtolower(trim((string)$host));
             $host = preg_replace('/:\d+$/', '', $host);
-            if(in_array($host, ['localhost', '127.0.0.1', '::1'], true)) {
+            if (in_array($host, ['localhost', '127.0.0.1', '::1'], true)) {
                 return true;
             }
         }
@@ -342,7 +343,7 @@ class Email
     protected function writeSimulatedEmail($payload)
     {
         $directory = rtrim($this->resolveProjectRoot(), '/\\') . DIRECTORY_SEPARATOR . trim($this->simulatedEmailsDirectory, '/\\') . DIRECTORY_SEPARATOR;
-        if(!is_dir($directory)) {
+        if (!is_dir($directory)) {
             mkdir($directory, 0775, true);
         }
 
@@ -365,7 +366,7 @@ class Email
 
     protected function resolveProjectRoot()
     {
-        if(defined('DIR_PROJECT')) {
+        if (defined('DIR_PROJECT')) {
             return DIR_PROJECT;
         }
 
