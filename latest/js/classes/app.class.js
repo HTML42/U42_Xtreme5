@@ -47,6 +47,11 @@ class AppClass {
                         if(typeof Page.Template === 'object' && Page.Template !== null) {
                             if(typeof Page.Template.dom === 'object' && Page.Template.dom) {
                                 document.querySelector('body main#page_main > article').append(Page.Template.dom);
+                                [300, 500, 900, 1500].forEach(function(delay) {
+                                    setTimeout(function() {
+                                        transform_datahref(document.querySelector('main article'));
+                                    }, delay);
+                                });
                             }
                         }
                     }
